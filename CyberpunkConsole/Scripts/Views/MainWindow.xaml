@@ -1,0 +1,121 @@
+﻿<Window x:Class="CyberpunkConsole.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CyberpunkConsole"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:v="clr-namespace:CyberpunkConsole.Scripts.Views"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowState="{Binding WindowState, UpdateSourceTrigger=PropertyChanged}"
+        ResizeMode="{Binding ResizeMode, UpdateSourceTrigger=PropertyChanged}"
+        BorderThickness="{Binding WindowBorderThickness, UpdateSourceTrigger=PropertyChanged}"
+        BorderBrush="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        mc:Ignorable="d"
+        Title="CyberpunkConsole" MinHeight="450" MinWidth="800"
+        DataContext="{x:Static local:App.MainVM}"
+        MouseLeftButtonDown="Window_MouseDown" FontFamily="{StaticResource cz}">
+        <!--#region Window chrome-->
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="15 15 15 15"/>
+    </WindowChrome.WindowChrome>
+    <!--#endregion-->
+    <Grid Background="#1c1c24" Margin="{Binding GridMargin, UpdateSourceTrigger=PropertyChanged}">
+        <!--#region Definitions-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="43"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--#endregion-->
+
+        <!--#region Menu panel-->
+        <DockPanel Background="#18181b" >
+            <!--#region App manipulation buttons-->
+            <StackPanel HorizontalAlignment="Left" Margin="7 0" VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                        <Setter Property="Foreground" Value="#579571"/>
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Margin" Value="5 0"/>
+                        <Setter Property="BorderBrush" Value="#1e1e1e"/>
+                        <Setter Property="Width" Value="120"/>
+                        <Setter Property="BorderThickness" Value="1.4"/>
+                    </Style>
+                </StackPanel.Resources>
+                <Button Content="File"/>
+                <Button Content="Commands"/>
+                <Button Content="Add"/>
+                <Button Content="Shortcuts"/>
+                <Button Content="About"/>
+            </StackPanel>
+            <!--#endregion-->
+            <!--#region Window buttons panel-->
+        <StackPanel Background="#1b1b22" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Height" Value="25"/>
+                    <Setter Property="Margin" Value="3 0"/>
+                    <Setter Property="Width" Value="29"/>
+                    <Setter Property="BorderBrush" Value="{x:Null}"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </StackPanel.Resources>
+            <!--#region Window manipulation buttons-->
+            <!--#region Hide button-->
+            <Button>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding MinimizeCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <!--#endregion-->
+            <!--#region Maximize command-->
+            <Button Background="#4b5e68">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding MaximizeCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <!--#endregion-->
+            <!--#region Close button-->
+            <Button Background="#8d2f3c">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding CloseCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <!--#endregion-->
+            <!--#endregion-->
+        </StackPanel>
+        <!--#endregion-->
+        </DockPanel>
+        <!--#endregion-->
+        
+        <!--#region Console-->
+            <v:CyberConsole x:Name="textEditor" Background="#1c1c24" Grid.Row="1"  Margin="0 5 4 10" 
+                               FontFamily="{StaticResource cz}"
+                               DataContext="{x:Static local:App.ConsoleVM}"
+                               Foreground="#579571" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                               FontSize="22" Document="{Binding Document, UpdateSourceTrigger=PropertyChanged}"
+                               EnterSymbol="{Binding EnterSymbol, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            ConsoleMode="{Binding ConsoleMode, UpdateSourceTrigger=PropertyChanged}">
+                <v:CyberConsole.InputBindings>
+                    <KeyBinding Gesture="CTRL+R" Command="{Binding SelectRowCommand}"
+                            CommandParameter="{Binding ElementName=textEditor}"/>
+                </v:CyberConsole.InputBindings>
+            </v:CyberConsole>
+
+        <!--#endregion-->
+    </Grid>
+</Window>
