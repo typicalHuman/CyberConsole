@@ -21,6 +21,11 @@ namespace Command
         /// </summary>
         protected virtual IParser Parser { get; set; } = new StandardParser();
 
+        /// <summary>
+        /// Message to write in the end of action.
+        /// </summary>
+        protected virtual string Message { get; set; }
+
         #endregion
 
         #region Public
@@ -42,7 +47,7 @@ namespace Command
 
         #region To override methods
 
-        public abstract void Action(string commandLineText);
+        public abstract void Action(string commandLineText, params object[] args);
 
         public virtual string PrintInfo()
         {

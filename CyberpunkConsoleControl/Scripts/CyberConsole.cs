@@ -1,7 +1,4 @@
 ﻿using Command.Attributes;
-using CyberpunkConsole.Scripts.Models;
-using CyberpunkConsole.Scripts.Models.Commands;
-using CyberpunkConsole.Scripts.ViewModels;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
@@ -12,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace CyberpunkConsole.Scripts.Views
+namespace CyberpunkConsoleControl
 {
     /// <summary>
     /// Class for CyberConsole control.
@@ -61,7 +58,7 @@ namespace CyberpunkConsole.Scripts.Views
             get => (string)GetValue(EnterSymbolProperty);
             set
             {
-                SetValue(EnterSymbolProperty, value);          
+                SetValue(EnterSymbolProperty, value);
                 OnPropertyChanged("EnterSymbol");
             }
         }
@@ -172,13 +169,14 @@ namespace CyberpunkConsole.Scripts.Views
                 int caretOffset = target.CaretOffset;
                 object newValue = args.NewValue;
 
+
+
                 if (newValue == null)
                 {
                     newValue = "";
                 }
 
                 target.Document.Text = (string)newValue;
-                target.CaretOffset = Math.Min(caretOffset, newValue.ToString().Length);
             }
         }
         #endregion
@@ -238,7 +236,9 @@ namespace CyberpunkConsole.Scripts.Views
         {
             if (this.Document != null)
             {
+                var a = CaretOffset;
                 Text = this.Document.Text;
+                TextArea.Caret.Offset = a;
             }
 
             base.OnTextChanged(e);
@@ -351,7 +351,7 @@ namespace CyberpunkConsole.Scripts.Views
         private void ExecuteCommand(string commandLineText)
         {
             int start = lastCaretLine - 1;
-            CommandsManager.ExecuteCommand(commandLineText);
+            CommandsManager.ExecuteCommand(commandLineText, this);
             int end = lastCaretLine - 1;
             ScrollToEnd();
             (TextArea.LeftMargins[0] as NewLineMargin).RemoveLines(start, end);
@@ -372,7 +372,7 @@ namespace CyberpunkConsole.Scripts.Views
         /// </summary>
         private bool IsPriorLine()
         {
-            return TextArea.Caret.Line < lastCaretLine && lastCaretLine != 1;
+            return Document.LineCount > lastCaretLine;
         }
 
         /// <summary>
@@ -381,13 +381,19 @@ namespace CyberpunkConsole.Scripts.Views
         private void CreatePreviousLineReadonlySegment()
         {
             TextSegment seg = new TextSegment();
+            TextSegmentCollection<TextSegment> segments = (TextArea.ReadOnlySectionProvider as TextSegmentReadOnlySectionProvider<TextSegment>).Segments;
+            int lineNum = 0;
+            if (segments.Count > 0)
+                  lineNum = Document.GetLineByOffset(segments.Last().StartOffset).LineNumber;
             //penultimate line
-            var line = Document.Lines[Document.LineCount - 2];
-            seg.StartOffset = line.Offset;
-            if (seg.StartOffset > 0)
-                seg.StartOffset--;
-            seg.EndOffset = line.EndOffset + 1;//to remove cases when with removing line first letters goes to previous line (which is readonly)
-            (TextArea.ReadOnlySectionProvider as TextSegmentReadOnlySectionProvider<TextSegment>).Segments.Add(seg);
+            if (lineNum < Document.LineCount - 1)
+            {
+                var line = Document.Lines[lineNum];
+                seg.StartOffset = line.Offset;
+                seg.EndOffset = line.EndOffset + 1;//to remove cases when with removing line first letters goes to previous line (which is readonly)
+                if (!segments.Contains(seg))
+                    segments.Add(seg);
+            }
         }
 
 
@@ -397,7 +403,7 @@ namespace CyberpunkConsole.Scripts.Views
         private bool IsRemovingTextWithAnotherSelection()
         {
             int startLineNum = TextArea.Selection.StartPosition.Line;
-            int lastLineNum = Document.Lines.Last().LineNumber;
+            int lastLineNum = Document.LineCount;
             if (startLineNum != 0)
                 return startLineNum != lastLineNum;
             return false;
@@ -424,6 +430,18 @@ namespace CyberpunkConsole.Scripts.Views
         {
             DocumentLine line = Document.Lines[TextArea.Caret.Line - 1];
             Select(line.Offset, line.Length);
+        }
+
+        /// <summary>
+        /// Insert <paramref name="textToInsert"/> in Console.
+        /// </summary>
+        /// <param name="textToInsert">Text which will be inserted.</param>
+        /// <param name="isNewLine">Insert with addition of new line.</param>
+        internal void InsertText(string textToInsert, bool isNewLine = false)
+        {
+            Text = Text.Insert(Text.Length, $"{textToInsert}");
+            if (isNewLine)
+                Text = Text.Insert(Text.Length, "\n");
         }
 
 

@@ -5,7 +5,7 @@ using Command.Errors;
 using System.Linq;
 using System;
 
-namespace CyberpunkConsole.Scripts.Models.Commands
+namespace StandardCommands
 {
     public class PrintCommand: ConsoleCommand 
     {
@@ -17,15 +17,6 @@ namespace CyberpunkConsole.Scripts.Models.Commands
         #endregion
 
         #region Properties
-
-        #region Private
-
-        /// <summary>
-        /// Message to write in the end of action.
-        /// </summary>
-        private string Message { get; set; } = "";
-
-        #endregion
 
         #region Overrided
         public override string Spelling { get; protected set; } = "print";
@@ -51,7 +42,7 @@ namespace CyberpunkConsole.Scripts.Models.Commands
 
         #region Action
 
-        public override void Action(string commandLineText)
+        public override void Action(string commandLineText, params object[] args)
         {
             SetParameters<NumberParameter, byte>(commandLineText);
             SetParameters<StringParameter, string>(commandLineText);

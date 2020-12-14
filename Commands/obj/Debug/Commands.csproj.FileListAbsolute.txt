@@ -1,0 +1,13 @@
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Commands.dll
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Commands.pdb
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Command.dll
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\CyberpunkConsoleControl.dll
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\ICSharpCode.AvalonEdit.dll
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Command.pdb
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\CyberpunkConsoleControl.pdb
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\ICSharpCode.AvalonEdit.xml
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csprojAssemblyReference.cache
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csproj.CoreCompileInputs.cache
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csproj.CopyComplete
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.dll
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.pdb

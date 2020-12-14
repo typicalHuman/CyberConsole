@@ -15,7 +15,6 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\Cyberp
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole.csproj.CopyComplete
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\ICSharpCode.AvalonEdit.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\ICSharpCode.AvalonEdit.xml
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\CommonServiceLocator.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\GalaSoft.MvvmLight.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\GalaSoft.MvvmLight.Extras.dll
@@ -149,3 +148,7 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\System
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole.exe.config
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Command.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Command.pdb
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\CyberpunkConsoleControl.dll
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\CyberpunkConsoleControl.pdb
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Commands.dll
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Commands.pdb

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CyberpunkConsole"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:v="clr-namespace:CyberpunkConsole.Scripts.Views"
+        xmlns:cc="clr-namespace:CyberpunkConsoleControl;assembly=CyberpunkConsoleControl"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowState="{Binding WindowState, UpdateSourceTrigger=PropertyChanged}"
         ResizeMode="{Binding ResizeMode, UpdateSourceTrigger=PropertyChanged}"
@@ -103,18 +103,18 @@
         <!--#endregion-->
         
         <!--#region Console-->
-            <v:CyberConsole x:Name="textEditor" Background="#1c1c24" Grid.Row="1"  Margin="0 5 4 10" 
+            <cc:CyberConsole x:Name="textEditor" Background="#1c1c24" Grid.Row="1"  Margin="0 5 4 10" 
                                FontFamily="{StaticResource cz}"
                                DataContext="{x:Static local:App.ConsoleVM}"
                                Foreground="#579571" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                FontSize="22" Document="{Binding Document, UpdateSourceTrigger=PropertyChanged}"
                                EnterSymbol="{Binding EnterSymbol, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                             ConsoleMode="{Binding ConsoleMode, UpdateSourceTrigger=PropertyChanged}">
-                <v:CyberConsole.InputBindings>
+                <cc:CyberConsole.InputBindings>
                     <KeyBinding Gesture="CTRL+R" Command="{Binding SelectRowCommand}"
                             CommandParameter="{Binding ElementName=textEditor}"/>
-                </v:CyberConsole.InputBindings>
-            </v:CyberConsole>
+                </cc:CyberConsole.InputBindings>
+            </cc:CyberConsole>
 
         <!--#endregion-->
     </Grid>

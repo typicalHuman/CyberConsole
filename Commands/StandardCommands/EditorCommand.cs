@@ -2,8 +2,9 @@
 using Command.Attributes;
 using Command.Interfaces;
 using Command.Parsers;
+using CyberpunkConsoleControl;
 
-namespace CyberpunkConsole.Scripts.Models.Commands
+namespace StandardCommands
 {
     class EditorCommand: ConsoleCommand
     {
@@ -17,14 +18,17 @@ namespace CyberpunkConsole.Scripts.Models.Commands
             return "Mode is changed to editor\n";
         }
 
-        public override void Action(string commandLineText)
+        public override void Action(string commandLineText, params object[] args)
         {
             CurrentAttributes = (Parser as StandardParser).GetAttributes(this, commandLineText);
-            if(commandLineText.Length < 7)
+            CyberConsole cc = args[0] as CyberConsole;
+            if(cc != null && IsCorrectSyntax())
             {
-                App.ConsoleVM.EnterSymbol = " > ";
-                App.ConsoleVM.ConsoleMode = ConsoleMode.EDITOR_MODE;
+                cc.EnterSymbol = " > ";
+                cc.ConsoleMode = ConsoleMode.EDITOR_MODE;
             }
         }
+
+
     }
 }

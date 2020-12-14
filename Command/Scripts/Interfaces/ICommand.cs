@@ -9,7 +9,7 @@
         /// <summary>
         /// Command action.
         /// </summary>
-        void Action(string commandLineText);
+        void Action(string commandLineText, params object[] args);
         /// <summary>
         /// Get statement line.
         /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace CyberpunkConsole.Scripts.Models
+﻿namespace CyberpunkConsoleControl
 {
     public enum LineState
     {

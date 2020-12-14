@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CyberpunkConsole.Scripts.Models
+namespace CyberpunkConsoleControl
 {
     public static class CommandsManager
     {
@@ -36,17 +36,17 @@ namespace CyberpunkConsole.Scripts.Models
 
         #region Methods
 
-        public static void ExecuteCommand(ICommand command, string commandLineText)
+        public static void ExecuteCommand(ICommand command, string commandLineText, CyberConsole console)
         {
             commandLineText = Regex.Replace(commandLineText, @"\s+", " ");
-            command.Action(commandLineText);
-            App.ConsoleVM.InsertText(command.PrintInfo());
+            command.Action(commandLineText, console);
+            console.InsertText(command.PrintInfo());
         }
 
         /// <summary>
         /// Find and execute command with <paramref name="commandLineText"/> lexic.
         /// </summary>
-        public static void ExecuteCommand(string commandLineText)
+        public static void ExecuteCommand(string commandLineText, CyberConsole console)
         {
             commandLineText = Regex.Replace(commandLineText, @"\s+", " ");
             if (commandLineText.Length > 0)
@@ -59,17 +59,17 @@ namespace CyberpunkConsole.Scripts.Models
                     ICommand command = (ICommand)Activator.CreateInstance(t);
                     if (command.IsCommandLexic(commandLineText))
                     {
-                        ExecuteCommand(command, commandLineText);
+                        ExecuteCommand(command, commandLineText, console);
                         return;
                     }
                 }
             }
-            App.ConsoleVM.InsertText(NOT_FOUND, true);
+            console.InsertText(NOT_FOUND, true);
         }
 
         public static void UpdateAssemblyTypes()
         {
-            assemblyTypes = Assembly.GetAssembly(typeof(CommandsManager))
+            assemblyTypes = Assembly.Load("Commands")
                                     .GetTypes()
                                     .ToList();
         }
