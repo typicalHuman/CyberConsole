@@ -274,17 +274,6 @@ namespace CyberpunkConsoleControl
                     e.Handled = true;
                 TextArea.Caret.Line = lastCaretLine;//setting caret on last line (to remove cases where the caret stays on the previous lines that are readonly)
             }
-            if (ConsoleMode == ConsoleMode.EDITOR_MODE &&
-                (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
-            {
-                if (Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.C))
-                {
-                    ConsoleMode = ConsoleMode.COMMAND_MODE;
-                    (TextArea.LeftMargins[0] as NewLineMargin).UpdateLineStates(ConsoleMode);
-                    Text = Text.Insert(Text.Length - 1, "\n");
-                    TextArea.Caret.Line = Document.Lines.Count;
-                }
-            }
             base.OnPreviewKeyDown(e);
         }
 
@@ -384,12 +373,14 @@ namespace CyberpunkConsoleControl
             TextSegmentCollection<TextSegment> segments = (TextArea.ReadOnlySectionProvider as TextSegmentReadOnlySectionProvider<TextSegment>).Segments;
             int lineNum = 0;
             if (segments.Count > 0)
-                  lineNum = Document.GetLineByOffset(segments.Last().StartOffset).LineNumber;
+                  lineNum = Document.GetLineByOffset(segments.Last().StartOffset + 1).LineNumber;
             //penultimate line
             if (lineNum < Document.LineCount - 1)
             {
                 var line = Document.Lines[lineNum];
                 seg.StartOffset = line.Offset;
+                if (seg.StartOffset > 0)
+                    seg.StartOffset--;
                 seg.EndOffset = line.EndOffset + 1;//to remove cases when with removing line first letters goes to previous line (which is readonly)
                 if (!segments.Contains(seg))
                     segments.Add(seg);

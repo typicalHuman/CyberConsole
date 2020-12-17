@@ -11,7 +11,7 @@ namespace CyberpunkConsoleControl
     /// <summary>
     /// Class for inserting $ symbol in each line. 
     /// </summary>
-    class NewLineMargin: LineNumberMargin
+    public class NewLineMargin: LineNumberMargin
     {
         #region Constants
 
@@ -87,6 +87,8 @@ namespace CyberpunkConsoleControl
                 INSERT_SYMBOL = (int)LineState.COMMAND_STATE;
             else
                 INSERT_SYMBOL = (int)LineState.EDIT_STATE;
+            while (TextView.Document.LineCount < LeftMarginStatesList.Count)
+                LeftMarginStatesList.RemoveAt(LeftMarginStatesList.Count - 1);
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace Command
     /// <summary>
     /// Abstract class for creating commands.
     /// </summary>
-    public abstract class ConsoleCommand: ICommand
+    public abstract class ConsoleCommand : ICommand
     {
         #region Properties
 
@@ -66,6 +66,22 @@ namespace Command
         #endregion
 
         #region Protected
+
+        #region IsCorrectParameters
+
+        protected bool IsCorrectParameters()
+        {
+            if(Parameters.Length > 0)
+            {
+                for(int i = 0; i < Parameters.Length; i++)
+                {
+                    if (!StandardParameters.Select(sp => sp.GetType()).Contains(Parameters[i].GetType()))
+                        return false;
+                }
+            }
+            return true;
+        }
+        #endregion
 
         #region SetParameters
 
@@ -225,7 +241,7 @@ namespace Command
         protected bool IsCorrectSyntax()
         {
             return Parameters?.Where(p => p != null && p.Error != null && p.Error.ErrorType != 0)
-                          .Count() == 0;
+                          .Count() == 0 && IsCorrectParameters();
         }
 
         #endregion

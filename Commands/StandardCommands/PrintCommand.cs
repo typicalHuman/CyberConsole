@@ -67,7 +67,6 @@ namespace StandardCommands
                     foreach (IParameter parameter in Parameters.Where(p => p.GetType() == typeof(StringParameter)))
                         Message = Message.Insert(Message.Length, $"{parameter.Value}\n");
                 }
-
             }
             else
                 Message = $"{GetErrorMessage(commandLineText)}\n";
