@@ -1,8 +1,10 @@
 ﻿using Command;
 using Command.Attributes;
 using Command.Interfaces;
+using Command.Parameters;
 using Command.Parsers;
 using CyberpunkConsoleControl;
+using System.Linq;
 
 namespace StandardCommands
 {
@@ -10,6 +12,7 @@ namespace StandardCommands
     {
         public override IAttrib[] StandardAttributes { get; protected set; } = new[] { new SaveAttribute() };
         public override IAttrib[] CurrentAttributes { get; set; }
+        public override IParameter[] StandardParameters { get; protected set ; }
         public override IParameter[] Parameters { get; set; }
         public override string Spelling { get; protected set; } = "echo";
 
@@ -20,7 +23,8 @@ namespace StandardCommands
 
         public override void Action(string commandLineText, params object[] args)
         {
-            CurrentAttributes = (Parser as StandardParser).GetAttributes(this, commandLineText);
+            Parameters = (Parser as StandardParser).GetAttributes(this, commandLineText);
+            CurrentAttributes = ExtractAttributes(Parameters).ToArray();
             CyberConsole cc = args[0] as CyberConsole;
             if(cc != null && IsCorrectSyntax())
             {
@@ -29,6 +33,6 @@ namespace StandardCommands
             }
         }
 
-
+       
     }
 }

@@ -66,7 +66,7 @@ namespace Command.Parsers
         {
             if (IsCommandLexic(command.Spelling, commandLineText))
             {
-                IEnumerable<string> attributeSpellings = GetAttributeSpellings(commandLineText);
+                IEnumerable<string> attributeSpellings = GetAllParametersSpellings(commandLineText);
                 return GetAttributes(command.StandardAttributes, attributeSpellings).ToArray();
             }
             else
@@ -102,11 +102,11 @@ namespace Command.Parsers
         }
 
         /// <summary>
-        /// Get attributes string values from <paramref name="commandLineText"/>.
+        /// Get parameters string values from <paramref name="commandLineText"/>.
         /// </summary>
         /// <param name="commandLineText">Line to parse.</param>
-        /// <returns>Enumerable of attributes string values.</returns>
-        private IEnumerable<string> GetAttributeSpellings(string commandLineText)
+        /// <returns>Enumerable of parameters string values.</returns>
+        private IEnumerable<string> GetParametersSpellings(string commandLineText)
         {
             for(int i = 1; i < splitedCommand.Length; i++)
                 yield return splitedCommand[i];
@@ -160,7 +160,7 @@ namespace Command.Parsers
         /// <returns>Enumerable of parameters string values.</returns>
         public IEnumerable<string> GetParameters(string commandLineText, IAttrib[] standardAttributes)
         {
-            List<string> attributes = GetAttributeSpellings(commandLineText).ToList();
+            List<string> attributes = GetAllParametersSpellings(commandLineText).ToList();
             bool isContains;
             for (int i = 1; i < splitedCommand.Length; i++)
             {
@@ -178,6 +178,17 @@ namespace Command.Parsers
                 if (!isContains)
                     yield return splitedCommand[i];
             }
+        }
+
+        /// <summary>
+        /// Get attributes string values from <paramref name="commandLineText"/>.
+        /// </summary>
+        /// <param name="commandLineText">Line to parse.</param>
+        /// <returns>Enumerable of attributes string values.</returns>
+        private IEnumerable<string> GetAllParametersSpellings(string commandLineText)
+        {
+            for (int i = 1; i < splitedCommand.Length; i++)
+                yield return splitedCommand[i];
         }
         #endregion
 

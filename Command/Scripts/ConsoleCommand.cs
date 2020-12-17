@@ -24,7 +24,7 @@ namespace Command
         /// <summary>
         /// Message to write in the end of action.
         /// </summary>
-        protected virtual string Message { get; set; }
+        protected virtual string Message { get; set; } = string.Empty;
 
         #endregion
 
@@ -34,10 +34,11 @@ namespace Command
 
         public abstract IAttrib[] CurrentAttributes { get; set; }
 
+        public abstract IParameter[] StandardParameters { get; protected set; }
+
         public abstract IParameter[] Parameters { get; set; }
 
         public abstract string Spelling { get; protected set; }
-
 
         #endregion
 
@@ -225,6 +226,17 @@ namespace Command
         {
             return Parameters?.Where(p => p != null && p.Error != null && p.Error.ErrorType != 0)
                           .Count() == 0;
+        }
+
+        #endregion
+
+        #region ExtractAttributes
+
+        protected IEnumerable<IAttrib> ExtractAttributes(IParameter[] parameters)
+        {
+            foreach(var p in parameters)
+                if(p as IAttrib != null)
+                    yield return p as IAttrib;
         }
 
         #endregion

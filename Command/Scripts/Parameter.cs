@@ -1,5 +1,6 @@
 ﻿using Command.Errors;
 using Command.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Command
@@ -46,6 +47,5 @@ namespace Command
             Error = error;
             return this;
         }
-
     }
 }

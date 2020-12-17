@@ -23,6 +23,10 @@
         /// </summary>
         IAttrib[] CurrentAttributes { get; set; }
         /// <summary>
+        /// Avaliable parameters for this command. 
+        /// </summary>
+        IParameter[] StandardParameters { get; }
+        /// <summary>
         /// Array of command parameters.
         /// </summary>
         IParameter[] Parameters { get; set; }

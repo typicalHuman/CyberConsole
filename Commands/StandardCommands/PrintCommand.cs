@@ -4,6 +4,7 @@ using Command.Parameters;
 using Command.Errors;
 using System.Linq;
 using System;
+using System.Reflection;
 
 namespace StandardCommands
 {
@@ -22,6 +23,11 @@ namespace StandardCommands
         public override string Spelling { get; protected set; } = "print";
         public override IAttrib[] StandardAttributes { get; protected set; }
         public override IAttrib[] CurrentAttributes { get; set; }
+        public override IParameter[] StandardParameters { get; protected set; } = 
+        {
+            new NumberParameter(),
+            new StringParameter()
+        };
         public override IParameter[] Parameters { get; set; }
         #endregion
 
