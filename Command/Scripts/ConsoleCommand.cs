@@ -1,6 +1,7 @@
 ﻿using Command.Errors;
 using Command.Interfaces;
 using Command.Parsers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,12 +76,23 @@ namespace Command
             {
                 for(int i = 0; i < Parameters.Length; i++)
                 {
-                    if (!StandardParameters.Select(sp => sp.GetType()).Contains(Parameters[i].GetType()))
-                        return false;
+                    Type parameterType = Parameters[i].GetType();
+                    if(!typeof(IAttrib).IsAssignableFrom(parameterType))//define: is parameter constant attribute or attribute.
+                      if (StandardParameters == null && !StandardParameters.Select(sp => sp.GetType()).Contains(parameterType))
+                          return false;
                 }
             }
             return true;
         }
+        #endregion
+
+        #region IsCorrectAttributes
+
+        //protected bool IsCorrectAttributes()
+        //{
+
+        //}
+
         #endregion
 
         #region SetParameters
@@ -199,7 +211,7 @@ namespace Command
                 {
                     if (Parameters[i].Error.ErrorType != 0)
                     {
-                        Parameters[i].Error.Offset = GetErrorOffset(ref LengthToSum, i, ref commandLineText);
+                        SetErrorOffset(ref LengthToSum, i, ref commandLineText);
                         errors[k] = Parameters[i].Error;
                         k++;
                     }
@@ -211,22 +223,15 @@ namespace Command
 
         //TODO: set error offset for quote, not for start of parameter.
         /// <summary>
-        /// Get offset of error.
+        /// Set offset error offset.
         /// </summary>
         /// <param name="LengthToSum">Count of removed chars from the <paramref name="commandLineText"/>.</param>
         /// <param name="i">Iteration index.</param>
         /// <param name="commandLineText">Line to parse.</param>
         /// <returns>Error offset.</returns>
-        private int GetErrorOffset(ref int LengthToSum, int i, ref string commandLineText)
+        private void SetErrorOffset(ref int LengthToSum, int i, ref string commandLineText)
         {
-            int index = 0;
-            while (index < Parameters[i].Offset)
-            {
-                index = commandLineText.IndexOf(Parameters[i].Value) + LengthToSum;
-                commandLineText = commandLineText.Remove(index - LengthToSum, Parameters[i].Value.Length);
-                LengthToSum += Parameters[i].Value.Length;
-            }
-            return index;
+            StandardParser.SetOffset(Parameters[i].Error, Parameters[i].Value, ref commandLineText, ref LengthToSum);
         }
 
 

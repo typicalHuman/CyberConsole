@@ -38,7 +38,6 @@ namespace CyberpunkConsoleControl
 
         public static void ExecuteCommand(ICommand command, string commandLineText, CyberConsole console)
         {
-            commandLineText = Regex.Replace(commandLineText, @"\s+", " ");
             command.Action(commandLineText, console);
             console.InsertText(command.PrintInfo());
         }
@@ -48,7 +47,6 @@ namespace CyberpunkConsoleControl
         /// </summary>
         public static void ExecuteCommand(string commandLineText, CyberConsole console)
         {
-            commandLineText = Regex.Replace(commandLineText, @"\s+", " ");
             if (commandLineText.Length > 0)
             {
                 Type commandType = typeof(ICommand);

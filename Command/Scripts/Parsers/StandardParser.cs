@@ -1,4 +1,6 @@
-﻿using Command.Interfaces;
+﻿using Command.Attributes;
+using Command.Errors;
+using Command.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -17,6 +19,8 @@ namespace Command.Parsers
         /// </summary>
         private const string PARSE_PARAMETERS_PATTERN = @"[\""].+?[\""]|[^ ]+";
 
+        private const string ANOTHER_SYMBOLS_PATTERN = @"\S*";
+
         #endregion
 
         #region Properties
@@ -31,6 +35,24 @@ namespace Command.Parsers
         #region Methods
 
         #region Public
+
+        public static void SetOffset(IOffset offset, string value, ref string lineToParse, ref int lengthToSum)
+        {
+            MatchCollection collection = Regex.Matches(lineToParse, ANOTHER_SYMBOLS_PATTERN + value + ANOTHER_SYMBOLS_PATTERN);
+            if (collection.Count > 0)
+            {
+                Match match = collection[0];
+                offset.Offset = match.Index + lengthToSum;
+                offset.EndOffset = offset.Offset + value.Length;
+                lineToParse = lineToParse.Remove(offset.Offset - lengthToSum, value.Length);
+                lengthToSum += value.Length;
+            }
+        }
+
+        public static void SetOffset(IParameter param, ref string lineToParse, ref int lengthToSum)
+        {
+            SetOffset(param, param.Value, ref lineToParse, ref lengthToSum);
+        }
 
         /// <summary>
         /// Is <paramref name="commandLineText"/> suited for command lexic.
@@ -52,7 +74,7 @@ namespace Command.Parsers
         public bool IsAttributesLexic(IAttrib[] standardAttributes, string commandLineText)
         {
             if (splitedCommand == null)
-                SetSplitedCommandValue(commandLineText);
+                splitedCommand = GetSplitedCommandValue(commandLineText);
             return IsAttributesLexic(standardAttributes);
         }
 
@@ -67,7 +89,7 @@ namespace Command.Parsers
             if (IsCommandLexic(command.Spelling, commandLineText))
             {
                 IEnumerable<string> attributeSpellings = GetAllParametersSpellings(commandLineText);
-                return GetAttributes(command.StandardAttributes, attributeSpellings).ToArray();
+                return GetAttributes(command.StandardAttributes, attributeSpellings, commandLineText).ToArray();
             }
             else
                 return new IAttrib[] { };
@@ -82,9 +104,9 @@ namespace Command.Parsers
         /// Splite command by spaces. (first will be command spelling, the rest are parameters).
         /// </summary>
         /// <param name="commandLineText">Line to parse.</param>
-        private void SetSplitedCommandValue(string commandLineText)
+        private string[] GetSplitedCommandValue(string commandLineText)
         {
-            splitedCommand = Regex.Matches(commandLineText, PARSE_PARAMETERS_PATTERN)
+            return Regex.Matches(commandLineText, PARSE_PARAMETERS_PATTERN)
                 .Cast<Match>()
                 .Select(m => m.Value)
                 .ToArray();
@@ -97,7 +119,7 @@ namespace Command.Parsers
         /// <returns>String value of command identifier.</returns>
         private string GetCommandSpelling(string commandLineText)
         {
-            SetSplitedCommandValue(commandLineText);
+            splitedCommand = GetSplitedCommandValue(commandLineText);
             return splitedCommand[0];
         }
 
@@ -142,15 +164,30 @@ namespace Command.Parsers
         /// <param name="standardAttributes">Command avaliable attributes.</param>
         /// <param name="attributeSpellings">Enumerable of attributes string values.</param>
         /// <returns>Enumerable of found attributes.</returns>
-        private IEnumerable<IAttrib> GetAttributes(IAttrib[] standardAttributes, IEnumerable<string> attributeSpellings)
+        private IEnumerable<IAttrib> GetAttributes(IAttrib[] standardAttributes, IEnumerable<string> attributeSpellings, string commandLineText)
         {
+            int lengthToSum = 0;
             foreach(string spelling in attributeSpellings)
             {
+                bool isFound = false;
                 foreach (IAttrib attrib in standardAttributes)
+                {
                     if (attrib.Equals(spelling))
+                    {
+                        SetOffset(attrib, ref commandLineText, ref lengthToSum);
+                        isFound = true;
                         yield return attrib;
+                    }
+                }
+                if (!isFound)
+                {
+                    ErrorAttribute errAttrib = new ErrorAttribute() { Error = new ParameterNotFoundError(spelling), Value = spelling };
+                    SetOffset(errAttrib, ref commandLineText, ref lengthToSum);
+                    yield return errAttrib;
+                }
             }
         }
+
 
         /// <summary>
         /// Get parameters by excluding attributes from <paramref name="commandLineText"/>.

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scripts\Attributes\ErrorAttribute.cs" />
     <Compile Include="Scripts\Attributes\SaveAttribute.cs" />
     <Compile Include="Scripts\ConsoleCommand.cs" />
     <Compile Include="Scripts\Errors\AnotherParameterError.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Scripts\Errors\LetterToDigitError.cs" />
     <Compile Include="Scripts\Errors\NullValueError.cs" />
     <Compile Include="Scripts\Errors\OutOfRangeNumberError.cs" />
+    <Compile Include="Scripts\Errors\ParameterNotFoundError.cs" />
     <Compile Include="Scripts\Errors\ParametersExcessError.cs" />
     <Compile Include="Scripts\Errors\SyntaxError.cs" />
     <Compile Include="Scripts\Errors\ErrorTypes.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Scripts\Interfaces\IAttrib.cs" />
     <Compile Include="Scripts\Interfaces\ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\Interfaces\IOffset.cs" />
     <Compile Include="Scripts\Interfaces\IParameter.cs" />
     <Compile Include="Scripts\Interfaces\IParameterParser.cs" />
     <Compile Include="Scripts\Interfaces\IParser.cs" />

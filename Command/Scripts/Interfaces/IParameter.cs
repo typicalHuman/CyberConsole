@@ -5,7 +5,7 @@ namespace Command.Interfaces
     /// <summary>
     /// Random data storage interface.
     /// </summary>
-    public interface IParameter
+    public interface IParameter: IOffset
     {
         /// <summary>
         /// String value of parameter.
@@ -21,15 +21,5 @@ namespace Command.Interfaces
         /// Error value.
         /// </summary>
         Error Error { get; set; }
-
-        /// <summary>
-        /// Offset in command line text.
-        /// </summary>
-        int Offset { get; set; }
-
-        /// <summary>
-        /// EndOffset in command line text.
-        /// </summary>
-        int EndOffset { get; set; }
     }
 }

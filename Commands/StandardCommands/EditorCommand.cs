@@ -29,7 +29,7 @@ namespace StandardCommands
 
         public override string PrintInfo()
         {
-            return "Mode is changed to editor.\n";
+            return Message;
         }
 
 
@@ -43,7 +43,10 @@ namespace StandardCommands
                 cc.EnterSymbol = " > ";
                 cc.ConsoleMode = ConsoleMode.EDITOR_MODE;
                 cc.PreviewKeyDown += OnPreviewKeyDown;
+                Message = "Mode is changed to editor.\n";
             }
+            else
+                Message = GetErrorMessage(commandLineText) + "\n";
         }
 
 

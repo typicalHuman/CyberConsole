@@ -1,9 +1,11 @@
-﻿namespace Command.Errors
+﻿using Command.Interfaces;
+
+namespace Command.Errors
 {
     /// <summary>
     /// Class to define console errors.
     /// </summary>
-    public abstract class Error
+    public abstract class Error: IOffset
     {
         /// <summary>
         /// Abstract error type.
@@ -15,10 +17,6 @@
         /// </summary>
         public abstract string Message { get; protected set; } 
 
-        /// <summary>
-        /// Position of error.
-        /// </summary>
-        public virtual int Offset { get; set; }
 
         public static explicit operator Error(ErrorTypes type)
         {
@@ -26,5 +24,8 @@
                 return new SyntaxError();
             return new NoneError();
         }
+
+        public int Offset { get; set; }
+        public int EndOffset { get; set; }
     }
 }
