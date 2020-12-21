@@ -221,7 +221,6 @@ namespace Command
             return new[] { new SyntaxError() };
         }
 
-        //TODO: set error offset for quote, not for start of parameter.
         /// <summary>
         /// Set offset error offset.
         /// </summary>

@@ -9,8 +9,14 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
+//TODO: create for(init;condition;iteration) command.
+//TODO: include c# syntax editor.
+
 namespace CyberpunkConsoleControl
 {
+    /// <summary>
+    /// Class for executing commands
+    /// </summary>
     public static class CommandsManager
     {
         #region Constants
@@ -21,6 +27,9 @@ namespace CyberpunkConsoleControl
 
         #region Properties
 
+        /// <summary>
+        /// List with types which inherited from <see cref="ICommand"/>.
+        /// </summary>
         private static List<Type> assemblyTypes { get; set; }
 
         #endregion
@@ -36,6 +45,12 @@ namespace CyberpunkConsoleControl
 
         #region Methods
 
+        /// <summary>
+        /// Execute command by its type.
+        /// </summary>
+        /// <param name="command">Command type.</param>
+        /// <param name="commandLineText">Line to parse</param>
+        /// <param name="console">Console parameter.</param>
         public static void ExecuteCommand(ICommand command, string commandLineText, CyberConsole console)
         {
             command.Action(commandLineText, console);
@@ -45,6 +60,8 @@ namespace CyberpunkConsoleControl
         /// <summary>
         /// Find and execute command with <paramref name="commandLineText"/> lexic.
         /// </summary>
+        /// <param name="commandLineText">Line to parse.</param>
+        /// <param name="console">Console parameter.</param>
         public static void ExecuteCommand(string commandLineText, CyberConsole console)
         {
             if (commandLineText.Length > 0)
@@ -65,6 +82,9 @@ namespace CyberpunkConsoleControl
             console.InsertText(NOT_FOUND, true);
         }
 
+        /// <summary>
+        /// Update types (for dynamically adding commands to console).
+        /// </summary>
         public static void UpdateAssemblyTypes()
         {
             assemblyTypes = Assembly.Load("Commands")

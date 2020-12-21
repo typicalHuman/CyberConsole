@@ -1,15 +1,13 @@
 ﻿using Command.Errors;
 using Command.Interfaces;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Command.Attributes
 {
+    /// <summary>
+    /// Attribute for saving content on file.
+    /// </summary>
     public class SaveAttribute: IAttrib
     {
         public void Action(object input)
@@ -21,8 +19,12 @@ namespace Command.Attributes
             else
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 if (saveFileDialog.ShowDialog() == true)
+                {
                     File.WriteAllText(saveFileDialog.FileName, input.ToString());
+                }
+                
             }
         }
 
