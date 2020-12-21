@@ -4,7 +4,7 @@
     {
         private int Start { get; set; }
         private int End { get; set; }
-        public OutOfRangeNumberError(int start = 1, int end = 255)
+        public OutOfRangeNumberError(int start = 1, int end = 32767)
         {
             Start = start;
             End = end;

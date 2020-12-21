@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace Command.Parsers
 {
     /// <summary>
-    /// Standard behavioral parser.
+    /// Standard behavioural parser.
     /// </summary>
     public class StandardParser : IParser
     {
@@ -17,7 +17,7 @@ namespace Command.Parsers
         /// <summary>
         /// To split parameters by spaces and quotes.
         /// </summary>
-        private const string PARSE_PARAMETERS_PATTERN = @"[\""].+?[\""]|[^ ]+";
+        private const string PARSE_PARAMETERS_PATTERN = @"\((.*?)\)|[\""].+?[\""]|[^ ]+";
 
         private const string ANOTHER_SYMBOLS_PATTERN = @"\S*";
 
@@ -106,9 +106,10 @@ namespace Command.Parsers
         /// <param name="commandLineText">Line to parse.</param>
         private string[] GetSplitedCommandValue(string commandLineText)
         {
-            return Regex.Matches(commandLineText, PARSE_PARAMETERS_PATTERN)
+            string[] splited = Regex.Matches(commandLineText, PARSE_PARAMETERS_PATTERN)
                 .Cast<Match>()
                 .Select(m => m.Value).ToArray();
+            return splited;
         }
 
         /// <summary>
@@ -119,7 +120,7 @@ namespace Command.Parsers
         private string GetCommandSpelling(string commandLineText)
         {
             splitedCommand = GetSplitedCommandValue(commandLineText);
-            return splitedCommand[0];
+            return splitedCommand[0].Replace(" ", "");
         }
 
         /// <summary>

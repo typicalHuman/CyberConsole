@@ -50,7 +50,7 @@ namespace StandardCommands
 
         public override void Action(string commandLineText, params object[] args)
         {
-            SetParameters<NumberParameter, byte>(commandLineText);
+            SetParameters<NumberParameter, short>(commandLineText);
             SetParameters<StringParameter, string>(commandLineText);
             if (IsCorrectSyntax() && !IsExcessParameters())
             {

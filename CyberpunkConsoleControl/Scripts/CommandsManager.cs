@@ -10,6 +10,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 //TODO: create for(init;condition;iteration) command.
+//TODO: clear command.
+//TODO: exit command.
+//TODO: fix copy of readonly segments
 
 namespace CyberpunkConsoleControl
 {

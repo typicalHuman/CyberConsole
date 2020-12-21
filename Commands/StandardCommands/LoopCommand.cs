@@ -23,7 +23,12 @@ namespace Commands.StandardCommands
         public override void Action(string commandLineText, params object[] args)
         {
             SetParameters<BracketParameter, string>(commandLineText);
-            var a = Parameters;
+            string[] splitedOperations = Parameters[0].Value.Split(';');
+            List<IParameter> parameters = new List<IParameter>();
+            for (int i = 0; i < splitedOperations.Length; i++)
+                parameters.Add(new NumberParameter().GetParameter(splitedOperations[i]));
         }
+
+
     }
 }
