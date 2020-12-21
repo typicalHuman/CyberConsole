@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StandardCommands\EditorCommand.cs" />
+    <Compile Include="StandardCommands\LoopCommand.cs" />
     <Compile Include="StandardCommands\PrintCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

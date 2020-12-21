@@ -68,7 +68,9 @@
     <Compile Include="Scripts\Interfaces\IParameterParser.cs" />
     <Compile Include="Scripts\Interfaces\IParser.cs" />
     <Compile Include="Scripts\Parameter.cs" />
+    <Compile Include="Scripts\Parameters\BracketParameter.cs" />
     <Compile Include="Scripts\Parameters\NumberParameter.cs" />
+    <Compile Include="Scripts\Parameters\ParameterParsers\BracketParser.cs" />
     <Compile Include="Scripts\Parameters\ParameterParsers\NumberParser.cs" />
     <Compile Include="Scripts\Parameters\ParameterParsers\ParameterParser.cs" />
     <Compile Include="Scripts\Parameters\ParameterParsers\StringParser.cs" />

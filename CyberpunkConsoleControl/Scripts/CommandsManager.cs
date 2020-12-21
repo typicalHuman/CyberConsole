@@ -10,7 +10,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 //TODO: create for(init;condition;iteration) command.
-//TODO: include c# syntax editor.
 
 namespace CyberpunkConsoleControl
 {

@@ -108,8 +108,7 @@ namespace Command.Parsers
         {
             return Regex.Matches(commandLineText, PARSE_PARAMETERS_PATTERN)
                 .Cast<Match>()
-                .Select(m => m.Value)
-                .ToArray();
+                .Select(m => m.Value).ToArray();
         }
 
         /// <summary>
