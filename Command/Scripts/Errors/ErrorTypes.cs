@@ -13,6 +13,7 @@
         WRONG_INPUT,
         PARAMETERS_EXCESS,
         NULL_VALUE,
-        NOT_FOUND
+        NOT_FOUND,
+        PARAMETERS_ABSENCE
     }
 }

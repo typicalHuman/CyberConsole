@@ -10,9 +10,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 
 //TODO: create for(init;condition;iteration) command.
+//TODO: create method in CyberCommand to set none parameters error.
 //TODO: clear command.
 //TODO: exit command.
 //TODO: fix copy of readonly segments
+//TODO: add console functions to add commands with -f, -d, -fp attributes (file, directory, files_params)
 
 namespace CyberpunkConsoleControl
 {

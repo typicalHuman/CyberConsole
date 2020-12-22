@@ -57,6 +57,7 @@
     <Compile Include="Scripts\Errors\OutOfRangeNumberError.cs" />
     <Compile Include="Scripts\Errors\ParameterNotFoundError.cs" />
     <Compile Include="Scripts\Errors\ParametersExcessError.cs" />
+    <Compile Include="Scripts\Errors\ParametersAbscenceError.cs" />
     <Compile Include="Scripts\Errors\SyntaxError.cs" />
     <Compile Include="Scripts\Errors\ErrorTypes.cs" />
     <Compile Include="Scripts\Errors\UnclosedQuoteError.cs" />

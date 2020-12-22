@@ -1,6 +1,6 @@
 ﻿namespace Command.Errors
 {
-    class ParameterNotFoundError: Error
+    public class ParameterNotFoundError: Error
     {
         private string ParameterStringValue { get; set; } = string.Empty;
 

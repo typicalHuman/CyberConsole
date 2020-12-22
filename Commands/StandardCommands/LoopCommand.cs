@@ -1,4 +1,5 @@
 ﻿using Command;
+using Command.Errors;
 using Command.Interfaces;
 using Command.Parameters;
 using Command.Parsers;
@@ -37,10 +38,25 @@ namespace Commands.StandardCommands
         {
             SetParameters<BracketParameter, string>(commandLineText);
             SetParameters<StringParameter, string>(commandLineText);
-            string[] splitedOperations = Parameters[0].Value.Split(';');
-            List<IParameter> parameters = new List<IParameter>();
-            for (int i = 0; i < splitedOperations.Length; i++)
-                parameters.Add(new NumberParameter().GetParameter(splitedOperations[i]));
+            if (IsCorrectSyntax(true))
+            {
+                if (Parameters[0] == StandardParameters[0])
+                {
+                    string[] splitedOperations = Parameters[0].Value.Split(';');
+                    List<IParameter> parameters = new List<IParameter>();
+                    for (int i = 0; i < splitedOperations.Length; i++)
+                        parameters.Add(new NumberParameter().GetParameter(splitedOperations[i]));
+                }
+                else
+                {
+                    Parameters[0].Error = new ParameterNotFoundError("with loop conditions"); 
+                }
+            }
+            if (Parameters.Length == 0)
+            {
+                Parameters = new IParameter[]{ new BracketParameter() { Error = new ParametersAbscenceError(StandardParameters), Value = string.Empty } };
+            }
+            Message = GetErrorMessage(commandLineText);
         }
 
 

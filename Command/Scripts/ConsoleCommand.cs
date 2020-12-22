@@ -53,7 +53,7 @@ namespace Command
 
         public virtual string PrintInfo()
         {
-            return "";
+            return Message + "\n";
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Command
 
         #region IsCorrectParameters
 
-        protected bool IsCorrectParameters()
+        protected bool IsCorrectParameters(bool isRequiredParameters = false)
         {
             if(Parameters.Length > 0)
             {
@@ -81,7 +81,10 @@ namespace Command
                       if (StandardParameters == null && !StandardParameters.Select(sp => sp.GetType()).Contains(parameterType))
                           return false;
                 }
+                return true;
             }
+            if (isRequiredParameters)
+                return false;
             return true;
         }
         #endregion
@@ -242,10 +245,10 @@ namespace Command
         /// Is correct parameters syntax.
         /// </summary>
         /// <returns>Is the parameters syntax fits the expected parameters.</returns>
-        protected bool IsCorrectSyntax()
+        protected bool IsCorrectSyntax(bool isRequiredParameters = false)
         {
             return Parameters?.Where(p => p != null && p.Error != null && p.Error.ErrorType != 0)
-                          .Count() == 0 && IsCorrectParameters();
+                          .Count() == 0 && IsCorrectParameters(isRequiredParameters);
         }
 
         #endregion
