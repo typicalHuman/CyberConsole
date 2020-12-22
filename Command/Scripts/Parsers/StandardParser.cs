@@ -12,12 +12,35 @@ namespace Command.Parsers
     /// </summary>
     public class StandardParser : IParser
     {
+        #region Constructors
+
+        /// <summary>
+        /// Standard constructor.
+        /// </summary>
+        public StandardParser()
+        {
+
+        }
+
+        /// <summary>
+        /// Initialize regex pattern.
+        /// </summary>
+        /// <param name="parsePattern">Pattern to parse parameters of command.</param>
+        public StandardParser(string parsePattern)
+        {
+            if(!string.IsNullOrEmpty(parsePattern))
+                PARSE_PARAMETERS_PATTERN = parsePattern;
+        }
+
+        #endregion
+
         #region Constants
 
         /// <summary>
         /// To split parameters by spaces and quotes.
         /// </summary>
-        private const string PARSE_PARAMETERS_PATTERN = @"\((.*?)\)|[\""].+?[\""]|[^ ]+";
+        private readonly string PARSE_PARAMETERS_PATTERN = @"[^ ]+ |""([^""]|"""")*"" | [\""].+?[\""]|[^ ]+";
+        // 
 
         private const string ANOTHER_SYMBOLS_PATTERN = @"\S*";
 
