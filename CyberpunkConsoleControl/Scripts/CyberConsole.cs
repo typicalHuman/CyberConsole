@@ -315,22 +315,11 @@ namespace CyberpunkConsoleControl
         private void ProcessCommand()
         {
             string commandLineText = GetCurrentLineText();
-            if (ConsoleMode == ConsoleMode.COMMAND_MODE)
-            {
-                ExecuteCommand(commandLineText);
-            }
-            if (isConsoleModeChanged)
-            {
-                UpdateConsoleModeChanged();
-            }
-            if (ConsoleMode == ConsoleMode.EDITOR_MODE)
-            {
-                (TextArea.LeftMargins[0] as NewLineMargin).AddLine();
-            }
+            ProcessCommand(commandLineText);
+          
         }
 
-
-
+ 
 
         /// <summary>
         /// Execute command by <paramref name="commandLineText"/> input.
@@ -421,6 +410,28 @@ namespace CyberpunkConsoleControl
             DocumentLine line = Document.Lines[TextArea.Caret.Line - 1];
             Select(line.Offset, line.Length);
         }
+
+        /// <summary>
+        /// Execute command by string.
+        /// </summary>
+        /// <param name="commandLineText">String to execute.</param>
+        public void ProcessCommand(string commandLineText)
+        {
+            if (ConsoleMode == ConsoleMode.COMMAND_MODE)
+            {
+                ExecuteCommand(commandLineText);
+            }
+            if (isConsoleModeChanged)
+            {
+                UpdateConsoleModeChanged();
+            }
+            if (ConsoleMode == ConsoleMode.EDITOR_MODE)
+            {
+                (TextArea.LeftMargins[0] as NewLineMargin).AddLine();
+            }
+        }
+
+
 
         /// <summary>
         /// Insert <paramref name="textToInsert"/> in Console.

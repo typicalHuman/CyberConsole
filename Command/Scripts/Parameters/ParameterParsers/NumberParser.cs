@@ -24,6 +24,7 @@ namespace Command.Parameters.ParameterParsers
 
         public override short Parse(string input, out Error error)
         {
+            input = input.Replace(" ", "");
             string[] matches = GetMatches(input, REGEX_PATTERN);
             if(matches.Length == 0)
             {

@@ -7,6 +7,10 @@ namespace Command.Errors
     /// </summary>
     public abstract class Error: IOffset
     {
+        protected Error(string addtionalMessage = "")
+        {
+            Message += addtionalMessage;
+        }
         /// <summary>
         /// Abstract error type.
         /// </summary>

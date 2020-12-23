@@ -39,8 +39,7 @@ namespace Command.Parsers
         /// <summary>
         /// To split parameters by spaces and quotes.
         /// </summary>
-        private readonly string PARSE_PARAMETERS_PATTERN = @"[^ ]+ |""([^""]|"""")*"" | [\""].+?[\""]|[^ ]+";
-        // 
+        private readonly string PARSE_PARAMETERS_PATTERN = "\"([^']*)\"|[^ ]+";
 
         private const string ANOTHER_SYMBOLS_PATTERN = @"\S*";
 

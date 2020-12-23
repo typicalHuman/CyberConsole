@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-//TODO: create for(init;condition;iteration) command.
+//TODO: create for(init;condition;iteration) "[command]" command.
 //TODO: create method in CyberCommand to set none parameters error.
 //TODO: clear command.
 //TODO: exit command.

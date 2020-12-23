@@ -52,7 +52,8 @@ namespace StandardCommands
         {
             SetParameters<NumberParameter, short>(commandLineText);
             SetParameters<StringParameter, string>(commandLineText);
-            if (IsCorrectSyntax() && !IsExcessParameters())
+            CheckParameters();
+            if (IsCorrectSyntax(true))
             {
                 int iterationsCount = 1;
                 Type numberParameter = typeof(NumberParameter);
@@ -73,11 +74,10 @@ namespace StandardCommands
         }
 
 
-        private bool IsExcessParameters()
+        private void CheckExcessParameters()
         {
             int stringParametersCount = 0;
             int numberParametersCount = 0;
-            bool isError = false;
             foreach (IParameter parameter in Parameters)
             {
                 if (numberParametersCount < 2 && parameter.GetType() == typeof(NumberParameter))
@@ -86,7 +86,7 @@ namespace StandardCommands
                     if (numberParametersCount > 1)
                     {
                         parameter.Error = new ParametersExcessError(NUMBER_EXCESS_MESSAGE);
-                        isError = true;
+                        return;
                     }
                 }
                 else if (stringParametersCount < 2)
@@ -95,11 +95,40 @@ namespace StandardCommands
                     if (stringParametersCount > 1)
                     {
                         parameter.Error = new ParametersExcessError(STRING_EXCESS_MESSAGE);
-                        isError = true;
+                        return;
                     }
                 }
             }
-            return isError;
+        }
+
+        private void CheckStringParameterExist()
+        {
+            if (!Parameters.Select(p => p.GetType())
+                           .ToList()
+                           .Contains(typeof(StringParameter)))
+                SetParametersAbsenceError();
+        }
+
+        private void CheckParameters()
+        {
+            CheckExcessParameters();
+            CheckStringParameterExist();
+        }
+
+        #endregion
+
+        #region MyRegion
+
+        protected override void SetParametersAbsenceError()
+        {
+            Parameters = new IParameter[]
+            {
+                new NumberParameter()
+                {
+                    Error = new ParametersAbscenceError(StandardParameters[1]),
+                    Value = string.Empty
+                }
+           };
         }
 
         #endregion

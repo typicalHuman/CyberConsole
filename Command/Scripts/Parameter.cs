@@ -11,7 +11,7 @@ namespace Command
     /// <typeparam name="T">Parameter's value type.</typeparam>
     public abstract class Parameter<T> : IParameter
     {
-        public virtual string Value { get; set; }
+        public virtual string Value { get; set; } = string.Empty;
 
         public int Offset { get; set; }
 

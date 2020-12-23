@@ -61,6 +61,7 @@
     <Compile Include="Scripts\Errors\SyntaxError.cs" />
     <Compile Include="Scripts\Errors\ErrorTypes.cs" />
     <Compile Include="Scripts\Errors\UnclosedQuoteError.cs" />
+    <Compile Include="Scripts\Errors\WrongParametersCountError.cs" />
     <Compile Include="Scripts\Interfaces\IAttrib.cs" />
     <Compile Include="Scripts\Interfaces\ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

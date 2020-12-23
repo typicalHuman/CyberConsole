@@ -1,5 +1,6 @@
 ﻿using Command.Errors;
 using Command.Interfaces;
+using Command.Parameters;
 using Command.Parsers;
 using System;
 using System.Collections.Generic;
@@ -70,6 +71,10 @@ namespace Command
 
         #region IsCorrectParameters
 
+        /// <summary>
+        /// Is standard parameters contains current parameters.
+        /// </summary>
+        /// <param name="isRequiredParameters">Is command required parameters.</param>
         protected bool IsCorrectParameters(bool isRequiredParameters = false)
         {
             if(Parameters.Length > 0)
@@ -84,17 +89,26 @@ namespace Command
                 return true;
             }
             if (isRequiredParameters)
+            {
+                SetParametersAbsenceError();
                 return false;
+            }
             return true;
         }
-        #endregion
 
-        #region IsCorrectAttributes
-
-        //protected bool IsCorrectAttributes()
-        //{
-
-        //}
+        /// <summary>
+        /// Set parameters absence error. (if Parameters.Length == 0 && isRequired == true)
+        /// </summary>
+        protected virtual void SetParametersAbsenceError()
+        {
+            Parameters = new IParameter[]
+            {
+                new NumberParameter()
+                {
+                    Error = new ParametersAbscenceError(StandardParameters)
+                }
+            };
+        }
 
         #endregion
 

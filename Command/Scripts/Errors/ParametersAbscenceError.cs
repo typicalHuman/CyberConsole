@@ -9,7 +9,7 @@ namespace Command.Errors
 {
     public class ParametersAbscenceError: Error
     {
-        public ParametersAbscenceError(IParameter[] standardParameter)
+        public ParametersAbscenceError(params IParameter[] standardParameter)
         {
             if(standardParameter.Length > 0)
             {
@@ -23,7 +23,7 @@ namespace Command.Errors
                 Message = sb.ToString();
             }
         }
-        public override ErrorTypes ErrorType { get; protected set; } = ErrorTypes.PARAMETERS_ABSENCE;
+        public override ErrorTypes ErrorType { get; protected set; } = ErrorTypes.WRONG_PARAMETERS_COUNT;
         public override string Message { get; protected set; } = "Command needs any parameters.";
     }
 }

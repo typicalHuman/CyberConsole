@@ -16,7 +16,7 @@ namespace Command.Errors
         {
             Message = String.Concat(Message, additionalInstruction);
         }
-        public override ErrorTypes ErrorType { get; protected set; } = ErrorTypes.PARAMETERS_EXCESS;
+        public override ErrorTypes ErrorType { get; protected set; } = ErrorTypes.WRONG_PARAMETERS_COUNT;
         public override string Message { get; protected set; } = $"Too many arguments! ";
     }
 }

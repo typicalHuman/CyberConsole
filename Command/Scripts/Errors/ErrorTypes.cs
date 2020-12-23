@@ -11,9 +11,8 @@
         UNCLOSED_QUOTE,
         OUT_OF_RANGE_NUMBER,
         WRONG_INPUT,
-        PARAMETERS_EXCESS,
         NULL_VALUE,
         NOT_FOUND,
-        PARAMETERS_ABSENCE
+        WRONG_PARAMETERS_COUNT
     }
 }

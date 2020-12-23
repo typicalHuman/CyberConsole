@@ -14,7 +14,7 @@ namespace Command.Parameters.ParameterParsers
         public override string Parse(string input, out Error error)
         {
             string[] matches = GetMatches(input, REGEX_PATTERN);
-            if (matches.Length == 0)
+            if (matches.Length == 0 || input[0] != '(' || input[input.Length - 1] != ')')
             {
                 if (input.Contains('(') || input.Contains(')'))//check is input contains bracket
                     error = new UnclosedQuoteError();
