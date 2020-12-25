@@ -16,7 +16,7 @@ namespace Commands.StandardCommands
     {
         #region Constants
 
-        private const string PARSE_PARAMETERS_PATTERN = "\"([^']*)\"|"+"[^ ]+|"+ @"\(([^']*)\)";
+        private const string PARSE_PARAMETERS_PATTERN = "\"([^']*)\"|" + @"\(([^']*)\)" +"|[^ ]+";
 
         #endregion
 
@@ -57,18 +57,24 @@ namespace Commands.StandardCommands
                         parameters.Add(new NumberParameter().GetParameter(splitedOperations[i]));
                     if (parameters.Count == 3)
                     {
-                        string commandToExecute = Parameters[1].Value;
-                        Parameters = parameters.ToArray();
-                        if (IsCorrectParameters(true))
+                        if (Parameters.Length == 2)
                         {
-
-                            int start = int.Parse(Parameters[0].Value);
-                            int condition = int.Parse(Parameters[1].Value);
-                            int iteration = int.Parse(Parameters[2].Value);
-                            for (int i = start; i < condition; i += iteration)
-                                cc.ProcessCommand(commandToExecute);
-                            Message = string.Empty;
-                            return;
+                            string commandToExecute = Parameters[1].Value;
+                            Parameters = parameters.ToArray();
+                            if (IsCorrectSyntax(true))
+                            {
+                                int start = int.Parse(Parameters[0].Value);
+                                int condition = int.Parse(Parameters[1].Value);
+                                int iteration = int.Parse(Parameters[2].Value);
+                                for (int i = start; i < condition; i += iteration)
+                                    cc.ProcessCommand(commandToExecute);
+                                Message = string.Empty;
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            SetParametersAbsenceError();
                         }
                     }
                     else

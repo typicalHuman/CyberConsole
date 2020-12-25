@@ -155,8 +155,10 @@ namespace CyberpunkConsoleControl
                 Brush foreground = (Brush)GetValue(Control.ForegroundProperty);
                 while (TextView.VisualLines[TextView.VisualLines.Count - 1].FirstDocumentLine.LineNumber > LeftMarginStatesList.Count)
                     setNextState?.Invoke();
-                if(setNextState == RemoveNextState)
+                if (setNextState == RemoveNextState)
+                {
                     LeftMarginStatesList[LeftMarginStatesList.Count - 1] = INSERT_SYMBOL;//for setting command symbol after mode change
+                }
                 DrawText(drawingContext, foreground);
             }
         }

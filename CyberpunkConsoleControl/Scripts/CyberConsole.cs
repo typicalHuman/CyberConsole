@@ -284,7 +284,10 @@ namespace CyberpunkConsoleControl
         {
             //if new line
             if (e.Key == Key.Enter)
+            {
+                ScrollToEnd();
                 ProcessCommand();
+            }
             base.OnKeyDown(e);
         }
 
@@ -316,7 +319,6 @@ namespace CyberpunkConsoleControl
         {
             string commandLineText = GetCurrentLineText();
             ProcessCommand(commandLineText);
-          
         }
 
  

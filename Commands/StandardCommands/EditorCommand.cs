@@ -73,6 +73,7 @@ namespace StandardCommands
             {
                 if (Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.C))
                 {
+                    cc.ScrollToEnd();
                     if (CurrentAttributes.Contains(StandardAttributes[0]))
                     {
                         int offset = cc.Document.GetOffset(StartEditingPoint, 0);

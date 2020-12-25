@@ -9,8 +9,9 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-//TODO: create for(init;condition;iteration) "[command]" command.
-//TODO: create method in CyberCommand to set none parameters error.
+//TODO: create for(init;condition;iteration) "[command]" command. DONE
+//TODO: create method in CyberCommand to set none parameters error. DONE
+//TODO: refactoring.
 //TODO: clear command.
 //TODO: exit command.
 //TODO: fix copy of readonly segments

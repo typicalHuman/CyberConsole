@@ -41,7 +41,10 @@ namespace Command.Parsers
         /// </summary>
         private readonly string PARSE_PARAMETERS_PATTERN = "\"([^']*)\"|[^ ]+";
 
-        private const string ANOTHER_SYMBOLS_PATTERN = @"\S*";
+        /// <summary>
+        /// <see cref="string.IndexOf(string)"/>'s not found value.
+        /// </summary>
+        private const int VALUE_NOT_FOUND = -1;
 
         #endregion
 
@@ -60,11 +63,10 @@ namespace Command.Parsers
 
         public static void SetOffset(IOffset offset, string value, ref string lineToParse, ref int lengthToSum)
         {
-            MatchCollection collection = Regex.Matches(lineToParse, ANOTHER_SYMBOLS_PATTERN + value + ANOTHER_SYMBOLS_PATTERN);
-            if (collection.Count > 0)
+            int index = lineToParse.IndexOf(value);
+            if (index != VALUE_NOT_FOUND)
             {
-                Match match = collection[0];
-                offset.Offset = match.Index + lengthToSum;
+                offset.Offset = index + lengthToSum;
                 offset.EndOffset = offset.Offset + value.Length;
                 lineToParse = lineToParse.Remove(offset.Offset - lengthToSum, value.Length);
                 lengthToSum += value.Length;
