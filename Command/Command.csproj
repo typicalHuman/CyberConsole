@@ -53,6 +53,7 @@
     <Compile Include="Scripts\Errors\Error.cs" />
     <Compile Include="Scripts\Errors\NoneError.cs" />
     <Compile Include="Scripts\Errors\LetterToDigitError.cs" />
+    <Compile Include="Scripts\Errors\NullArgumentError.cs" />
     <Compile Include="Scripts\Errors\NullValueError.cs" />
     <Compile Include="Scripts\Errors\OutOfRangeNumberError.cs" />
     <Compile Include="Scripts\Errors\ParameterNotFoundError.cs" />

@@ -143,6 +143,13 @@ namespace CyberpunkConsoleControl
             return new NewLineMargin();
         }
 
+        /// <summary>
+        /// Clear all left margins.
+        /// </summary>
+        public void Clear()
+        {
+            LeftMarginStatesList.Clear();
+        }
         #endregion
 
         #region Overrided
