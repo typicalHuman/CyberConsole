@@ -1,17 +1,12 @@
 ﻿using Command.Interfaces;
-using Microsoft.CSharp;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
 
 //TODO: create for(init;condition;iteration) "[command]" command. DONE
 //TODO: create method in CyberCommand to set none parameters error. DONE
-//TODO: refactoring.
+//TODO: refactoring. DONE
 //TODO: clear command.
 //TODO: exit command.
 //TODO: fix copy of readonly segments

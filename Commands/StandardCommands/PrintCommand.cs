@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace StandardCommands
 {
-    public class PrintCommand: ConsoleCommand 
+    class PrintCommand: ConsoleCommand 
     {
         #region Constants
 
