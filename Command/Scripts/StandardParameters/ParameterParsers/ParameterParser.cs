@@ -3,7 +3,7 @@ using Command.Interfaces;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Command.Parameters.ParameterParsers
+namespace Command.StandardParameters.ParameterParsers
 {
     /// <summary>
     /// Abstract class for creating parameters parser.

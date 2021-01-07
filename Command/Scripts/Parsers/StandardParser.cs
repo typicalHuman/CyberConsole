@@ -1,4 +1,4 @@
-﻿using Command.Attributes;
+﻿using Command.StandardAttributes;
 using Command.Errors;
 using Command.Interfaces;
 using System.Collections.Generic;

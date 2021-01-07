@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Command.Parameters.ParameterParsers
+namespace Command.StandardParameters.ParameterParsers
 {
     class BracketParser: ParameterParser<string>
     {

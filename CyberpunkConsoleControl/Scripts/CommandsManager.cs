@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading;
 
 //TODO: create for(init;condition;iteration) "[command]" command. DONE
 //TODO: create method in CyberCommand to set none parameters error. DONE

@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace Command.Parameters.ParameterParsers
+namespace Command.StandardParameters.ParameterParsers
 {
     /// <summary>
     /// Class for parsing strings.

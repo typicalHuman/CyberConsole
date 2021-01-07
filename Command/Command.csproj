@@ -46,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Scripts\Attributes\ErrorAttribute.cs" />
-    <Compile Include="Scripts\Attributes\SaveAttribute.cs" />
+    <Compile Include="Scripts\StandardAttributes\ErrorAttribute.cs" />
+    <Compile Include="Scripts\StandardAttributes\SaveAttribute.cs" />
     <Compile Include="Scripts\ConsoleCommand.cs" />
     <Compile Include="Scripts\Errors\AnotherParameterError.cs" />
     <Compile Include="Scripts\Errors\Error.cs" />
@@ -71,13 +71,13 @@
     <Compile Include="Scripts\Interfaces\IParameterParser.cs" />
     <Compile Include="Scripts\Interfaces\IParser.cs" />
     <Compile Include="Scripts\Parameter.cs" />
-    <Compile Include="Scripts\Parameters\BracketParameter.cs" />
-    <Compile Include="Scripts\Parameters\NumberParameter.cs" />
-    <Compile Include="Scripts\Parameters\ParameterParsers\BracketParser.cs" />
-    <Compile Include="Scripts\Parameters\ParameterParsers\NumberParser.cs" />
-    <Compile Include="Scripts\Parameters\ParameterParsers\ParameterParser.cs" />
-    <Compile Include="Scripts\Parameters\ParameterParsers\StringParser.cs" />
-    <Compile Include="Scripts\Parameters\StringParameter.cs" />
+    <Compile Include="Scripts\StandardParameters\BracketParameter.cs" />
+    <Compile Include="Scripts\StandardParameters\NumberParameter.cs" />
+    <Compile Include="Scripts\StandardParameters\ParameterParsers\BracketParser.cs" />
+    <Compile Include="Scripts\StandardParameters\ParameterParsers\NumberParser.cs" />
+    <Compile Include="Scripts\StandardParameters\ParameterParsers\ParameterParser.cs" />
+    <Compile Include="Scripts\StandardParameters\ParameterParsers\StringParser.cs" />
+    <Compile Include="Scripts\StandardParameters\StringParameter.cs" />
     <Compile Include="Scripts\Parsers\StandardParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

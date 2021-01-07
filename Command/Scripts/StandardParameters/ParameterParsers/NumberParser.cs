@@ -1,7 +1,7 @@
 ﻿using Command.Errors;
 using System.Text.RegularExpressions;
 
-namespace Command.Parameters.ParameterParsers
+namespace Command.StandardParameters.ParameterParsers
 {
     /// <summary>
     /// Class for parsing numbers.

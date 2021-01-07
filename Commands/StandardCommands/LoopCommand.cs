@@ -1,7 +1,7 @@
 ﻿using Command;
 using Command.Errors;
 using Command.Interfaces;
-using Command.Parameters;
+using Command.StandardParameters;
 using Command.Parsers;
 using CyberpunkConsoleControl;
 using System.Collections.Generic;

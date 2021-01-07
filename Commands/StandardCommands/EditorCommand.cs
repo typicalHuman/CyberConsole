@@ -1,5 +1,5 @@
 ﻿using Command;
-using Command.Attributes;
+using Command.StandardAttributes;
 using Command.Interfaces;
 using Command.Parsers;
 using CyberpunkConsoleControl;
@@ -68,32 +68,24 @@ namespace StandardCommands
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             CyberConsole cc = sender as CyberConsole;
-            if (cc.ConsoleMode == ConsoleMode.EDITOR_MODE &&
-                (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            if (Keyboard.IsKeyDown(Key.Escape))
             {
-                if (Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.C))
+                cc.ScrollToEnd();
+                if (CurrentAttributes.Contains(StandardAttributes[0]))
                 {
-                    cc.ScrollToEnd();
-                    if (CurrentAttributes.Contains(StandardAttributes[0]))
-                    {
-                        int offset = cc.Document.GetOffset(StartEditingPoint, 0);
-                        string editingText = cc.Document.GetText(offset, cc.Document.TextLength - offset);
-                        CurrentAttributes[0].Action(editingText);
-                    }
-                    cc.ConsoleMode = ConsoleMode.COMMAND_MODE;
-                    (cc.TextArea.LeftMargins[0] as NewLineMargin).UpdateLineStates(cc.ConsoleMode);
-                    cc.Text = cc.Text.Insert(cc.Text.Length, "\nMode is changed to console.\n");
-                    cc.TextArea.Caret.Line = cc.Document.Lines.Count;
-                    cc.PreviewKeyDown -= OnPreviewKeyDown;
+                    int offset = cc.Document.GetOffset(StartEditingPoint, 0);
+                    string editingText = cc.Document.GetText(offset, cc.Document.TextLength - offset);
+                    CurrentAttributes[0].Action(editingText);
                 }
+                cc.ConsoleMode = ConsoleMode.COMMAND_MODE;
+                (cc.TextArea.LeftMargins[0] as NewLineMargin).UpdateLineStates(cc.ConsoleMode);
+                cc.Text = cc.Text.Insert(cc.Text.Length, "\nMode is changed to console.\n");
+                cc.TextArea.Caret.Line = cc.Document.Lines.Count;
+                cc.PreviewKeyDown -= OnPreviewKeyDown;
             }
+
         }
 
         #endregion
-
-
-
-
-
     }
 }

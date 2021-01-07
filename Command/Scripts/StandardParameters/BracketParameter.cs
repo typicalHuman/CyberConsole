@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Command.Interfaces;
-using Command.Parameters.ParameterParsers;
+using Command.StandardParameters.ParameterParsers;
 
-namespace Command.Parameters
+namespace Command.StandardParameters
 {
     public class BracketParameter: Parameter<string>
     {

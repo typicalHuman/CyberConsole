@@ -1,6 +1,6 @@
 ﻿using Command.Errors;
 using Command.Interfaces;
-using Command.Parameters;
+using Command.StandardParameters;
 using Command.Parsers;
 using System;
 using System.Collections.Generic;
@@ -97,7 +97,7 @@ namespace Command
         }
 
         /// <summary>
-        /// Set parameters absence error. (if Parameters.Length == 0 && isRequired == true)
+        /// Set parameters absence error. (if StandardParameters.Length == 0 && isRequired == true)
         /// </summary>
         protected virtual void SetParametersAbsenceError()
         {

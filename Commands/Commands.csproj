@@ -48,6 +48,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StandardCommands\AddNewCommand\AddCommand.cs" />
     <Compile Include="StandardCommands\ClearCommand.cs" />
     <Compile Include="StandardCommands\EditorCommand.cs" />
     <Compile Include="StandardCommands\LoopCommand.cs" />

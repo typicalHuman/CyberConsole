@@ -6,17 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Command.Attributes
+namespace Commands.StandardCommands.AddNewCommand.Attributes
 {
-    internal class ErrorAttribute: IAttrib
+    internal class DirectoryAttribute: IAttrib
     {
         public void Action(object input = null)
         {
+
         }
 
-        public string Value { get; set; } = null;
-
-        public bool Equals(string parameter) => false;
+        public string Value => "-d";
+        public bool Equals(string parameter)
+        {
+            return Value.Equals(parameter);
+        }
 
         public Error Error { get; set; }
         public int Offset { get; set; }
