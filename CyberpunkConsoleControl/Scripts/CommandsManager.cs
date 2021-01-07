@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 
 //TODO: create for(init;condition;iteration) "[command]" command. DONE
 //TODO: create method in CyberCommand to set none parameters error. DONE
 //TODO: refactoring. DONE
-//TODO: clear command.
-//TODO: fix copy of readonly segments
+//TODO: clear command. DONE.
+//TODO: fix copy of readonly segments. DONE.
 //TODO: add console functions to add commands with -f, -d, -fp attributes (file, directory, files_params)
 
 namespace CyberpunkConsoleControl
@@ -79,6 +80,7 @@ namespace CyberpunkConsoleControl
                 }
             }
             console.InsertText(NOT_FOUND, true);
+          
         }
 
         /// <summary>

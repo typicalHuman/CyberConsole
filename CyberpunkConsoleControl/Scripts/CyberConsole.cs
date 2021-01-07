@@ -269,6 +269,7 @@ namespace CyberpunkConsoleControl
         {
             if (IsRemovingTextWithAnotherSelection())
             {
+                
                 if (ConsoleMode == ConsoleMode.COMMAND_MODE)
                     e.Handled = true;
                 TextArea.Caret.Line = lastCaretLine;//setting caret on last line (to remove cases where the caret stays on the previous lines that are readonly)
@@ -383,10 +384,13 @@ namespace CyberpunkConsoleControl
         /// </summary>
         private bool IsRemovingTextWithAnotherSelection()
         {
-            int startLineNum = TextArea.Selection.StartPosition.Line;
-            int lastLineNum = Document.LineCount;
-            if (startLineNum != 0)
-                return startLineNum != lastLineNum;
+            if (!(Keyboard.IsKeyDown(Key.LeftCtrl) && Keyboard.IsKeyDown(Key.C)))
+            {
+                int startLineNum = TextArea.Selection.StartPosition.Line;
+                int lastLineNum = Document.LineCount;
+                if (startLineNum != 0)
+                    return startLineNum != lastLineNum;
+            }
             return false;
         }
 
