@@ -152,3 +152,4 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Cyberp
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\CyberpunkConsoleControl.pdb
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Commands.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Commands.pdb
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\StandardCommands\AddNewCommand\AddType.exe

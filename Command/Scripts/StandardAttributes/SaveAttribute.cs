@@ -29,9 +29,9 @@ namespace Command.StandardAttributes
             Filter = filter;
         }
 
-        public void Action(object input)
+        public void Action(object[] args)
         {
-            if (input == null)
+            if (args == null || args.Length < 1)
             {
                 Error = new NullValueError();
             }
@@ -41,7 +41,7 @@ namespace Command.StandardAttributes
                 saveFileDialog.Filter = Filter;
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    File.WriteAllText(saveFileDialog.FileName, input.ToString());
+                    File.WriteAllText(saveFileDialog.FileName, args[0].ToString());
                 }
                 
             }

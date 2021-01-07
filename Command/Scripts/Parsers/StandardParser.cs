@@ -193,21 +193,13 @@ namespace Command.Parsers
             int lengthToSum = 0;
             foreach(string spelling in attributeSpellings)
             {
-                bool isFound = false;
                 foreach (IAttrib attrib in standardAttributes)
                 {
                     if (attrib.Equals(spelling))
                     {
                         SetOffset(attrib, ref commandLineText, ref lengthToSum);
-                        isFound = true;
                         yield return attrib;
                     }
-                }
-                if (!isFound)
-                {
-                    ErrorAttribute errAttrib = new ErrorAttribute() { Error = new ParameterNotFoundError(spelling), Value = spelling };
-                    SetOffset(errAttrib, ref commandLineText, ref lengthToSum);
-                    yield return errAttrib;
                 }
             }
         }

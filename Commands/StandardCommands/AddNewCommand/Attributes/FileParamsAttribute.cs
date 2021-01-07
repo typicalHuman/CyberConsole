@@ -10,7 +10,7 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
 {
     internal class FileParamsAttribute: IAttrib
     {
-        public void Action(object input = null)
+        public void Action(object[] args = null)
         {
 
         }

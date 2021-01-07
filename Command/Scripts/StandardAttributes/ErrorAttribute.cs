@@ -8,7 +8,7 @@ namespace Command.StandardAttributes
     /// </summary>
     internal class ErrorAttribute: IAttrib
     {
-        public void Action(object input = null)
+        public void Action(object[] args = null)
         {
         }
 

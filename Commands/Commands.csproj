@@ -31,13 +31,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\AddType\bin\Debug\EnvDTE.dll</HintPath>
+    </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=6.0.1.278, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\packages\AvalonEdit.6.0.1\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StandardCommands\AddNewCommand\AddCommand.cs" />
+    <Compile Include="StandardCommands\AddNewCommand\Attributes\FileParamsAttribute.cs" />
+    <Compile Include="StandardCommands\AddNewCommand\Attributes\DirectoryAttribute.cs" />
+    <Compile Include="StandardCommands\AddNewCommand\Attributes\FileAttribute.cs" />
     <Compile Include="StandardCommands\ClearCommand.cs" />
     <Compile Include="StandardCommands\EditorCommand.cs" />
     <Compile Include="StandardCommands\LoopCommand.cs" />

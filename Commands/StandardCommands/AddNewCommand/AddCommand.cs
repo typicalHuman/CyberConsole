@@ -1,17 +1,22 @@
 ﻿using Command;
 using Command.Interfaces;
 using Command.StandardParameters;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Commands.StandardCommands.AddNewCommand.Attributes;
+using CyberpunkConsoleControl;
+using Command.Parsers;
+using Command.Errors;
 
-namespace Commands.AddNewCommand
+namespace Commands.StandardCommands
 {
     class AddCommand : ConsoleCommand
     {
-        public override IAttrib[] StandardAttributes { get; protected set; }
+        public override IAttrib[] StandardAttributes { get; protected set; } = new IAttrib[]
+        {
+            new FileAttribute(),
+            new DirectoryAttribute(),
+            new FileParamsAttribute()
+        };
         public override IAttrib[] CurrentAttributes { get; set; }
         public override IParameter[] StandardParameters { get; protected set; } = new IParameter[]
         {
@@ -22,7 +27,21 @@ namespace Commands.AddNewCommand
 
         public override void Action(string commandLineText, params object[] args)
         {
-            throw new NotImplementedException();
+            IAttrib[] attribs = (Parser as StandardParser).GetAttributes(this, commandLineText);
+            CurrentAttributes = ExtractAttributes(attribs).ToArray();
+            SetParameters<StringParameter, string>(commandLineText);
+         
+            CyberConsole cc = args[0] as CyberConsole;
+            if (cc != null && IsCorrectSyntax(true))
+            {
+                if(CurrentAttributes.Length > 1)
+                    Message = new ParametersExcessError("File attribute must have a single path to .cs file.").Message;
+                else
+                    CurrentAttributes[0].Action(Parameters.Select(p => p.Value).ToArray());
+            }
+            else
+                Message = GetErrorMessage(commandLineText);
+
         }
     }
 }

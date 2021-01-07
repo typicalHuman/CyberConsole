@@ -75,7 +75,7 @@ namespace StandardCommands
                 {
                     int offset = cc.Document.GetOffset(StartEditingPoint, 0);
                     string editingText = cc.Document.GetText(offset, cc.Document.TextLength - offset);
-                    CurrentAttributes[0].Action(editingText);
+                    CurrentAttributes[0].Action(new []{ editingText });
                 }
                 cc.ConsoleMode = ConsoleMode.COMMAND_MODE;
                 (cc.TextArea.LeftMargins[0] as NewLineMargin).UpdateLineStates(cc.ConsoleMode);
