@@ -13,10 +13,6 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
 {
     internal class FileAttribute: IAttrib
     {
-        #region 
-
-        #endregion
-
         public void Action(object[] args = null)
         {
             if (args == null || args.Length == 0)
@@ -26,10 +22,7 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
             else
             {
                 string filePath = args[0].ToString();
-                ProcessStartInfo pInfo = new ProcessStartInfo();
-                string arggs = string.Join(" ", "Commands", filePath);
-                Process.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "StandardCommands\\AddNewCommand\\AddType.exe"), 
-                arggs ); 
+                Message = ProjectManager.ProjectManager.AddFiles(filePath);
             }
         }
 
@@ -38,6 +31,8 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
         {
             return Value.Equals(parameter);
         }
+
+        public string Message { get; private set; }
 
         public Error Error { get; set; }
         public int Offset { get; set; }

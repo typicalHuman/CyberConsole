@@ -167,7 +167,7 @@ namespace CyberpunkConsoleControl
             {
                 int caretOffset = target.CaretOffset;
                 object newValue = args.NewValue;
-
+            
 
 
                 if (newValue == null)
@@ -176,6 +176,7 @@ namespace CyberpunkConsoleControl
                 }
 
                 target.Document.Text = (string)newValue;
+                target.ScrollToVerticalOffset(caretOffset);
             }
         }
         #endregion
@@ -221,6 +222,7 @@ namespace CyberpunkConsoleControl
                 lastCaretLine = Document.LineCount;
             else
                 lastCaretLine = TextArea.Caret.Line;
+          
         }
 
         #endregion
@@ -269,7 +271,6 @@ namespace CyberpunkConsoleControl
         {
             if (IsRemovingTextWithAnotherSelection())
             {
-                
                 if (ConsoleMode == ConsoleMode.COMMAND_MODE)
                     e.Handled = true;
                 TextArea.Caret.Line = lastCaretLine;//setting caret on last line (to remove cases where the caret stays on the previous lines that are readonly)

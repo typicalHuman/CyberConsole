@@ -16,6 +16,8 @@ namespace Command.StandardAttributes
 
         public bool Equals(string parameter) => false;
 
+        public string Message { get; private set; }
+
         public Error Error { get; set; }
         public int Offset { get; set; }
         public int EndOffset { get; set; }

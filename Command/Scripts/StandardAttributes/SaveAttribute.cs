@@ -54,6 +54,8 @@ namespace Command.StandardAttributes
             return parameter.Equals(Value);
         }
 
+        public string Message { get; private set; }
+
         public Error Error { get; set; }
         public int Offset { get; set; }
         public int EndOffset { get; set; }

@@ -30,7 +30,6 @@ namespace Commands.StandardCommands
                 Message += "\n";
             return Message;
         }
-
         public override void Action(string commandLineText, params object[] args)
         {
             CyberConsole cc = args[0] as CyberConsole;

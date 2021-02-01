@@ -1,6 +1,7 @@
 ﻿using Command.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -66,6 +67,7 @@ namespace CyberpunkConsoleControl
             if (commandLineText.Length > 0)
             {
                 Type commandType = typeof(ICommand);
+                UpdateAssemblyTypes();
                 List<Type> commandTypes = assemblyTypes.Where(t => commandType.IsAssignableFrom(t) && t.IsClass)
                     .ToList();
                 foreach (Type t in commandTypes)
@@ -87,7 +89,10 @@ namespace CyberpunkConsoleControl
         /// </summary>
         public static void UpdateAssemblyTypes()
         {
-            assemblyTypes = Assembly.Load("Commands")
+              string projPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\"));
+               projPath = Path.Combine(projPath, "Commands\\bin\\Debug\\Commands.dll");
+            var ass = Assembly.LoadFile(@"C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Commands.dll");
+            assemblyTypes = ass
                                     .GetTypes()
                                     .ToList();
         }

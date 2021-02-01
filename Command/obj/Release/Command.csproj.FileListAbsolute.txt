@@ -1,0 +1,6 @@
+C:\files\Programming\Programs\CyberpunkConsole\Command\bin\Release\Command.dll
+C:\files\Programming\Programs\CyberpunkConsole\Command\bin\Release\Command.pdb
+C:\files\Programming\Programs\CyberpunkConsole\Command\obj\Release\Command.csprojAssemblyReference.cache
+C:\files\Programming\Programs\CyberpunkConsole\Command\obj\Release\Command.csproj.CoreCompileInputs.cache
+C:\files\Programming\Programs\CyberpunkConsole\Command\obj\Release\Command.dll
+C:\files\Programming\Programs\CyberpunkConsole\Command\obj\Release\Command.pdb

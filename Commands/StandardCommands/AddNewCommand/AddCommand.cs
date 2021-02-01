@@ -38,6 +38,7 @@ namespace Commands.StandardCommands
                     Message = new ParametersExcessError("File attribute must have a single path to .cs file.").Message;
                 else
                     CurrentAttributes[0].Action(Parameters.Select(p => p.Value).ToArray());
+                Message = CurrentAttributes[0].Message;
             }
             else
                 Message = GetErrorMessage(commandLineText);

@@ -1,0 +1,2 @@
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Release\Commands.csprojAssemblyReference.cache
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Release\Commands.csproj.CoreCompileInputs.cache

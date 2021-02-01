@@ -21,6 +21,8 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
             return Value.Equals(parameter);
         }
 
+        public string Message { get; set; }
+
         public Error Error { get; set; }
         public int Offset { get; set; }
         public int EndOffset { get; set; }
