@@ -97,6 +97,40 @@ namespace CyberpunkConsoleControl
                                     .ToList();
         }
 
+        private static List<Assembly> GetAddedAssemblies(string assemblyPath)
+        {
+            Assembly assembly = Assembly.LoadFrom(assemblyPath);
+            List<Stream> manifestStreams = GetManifestStreams(assembly);
+            List<Assembly> addedAssemblies = new List<Assembly>();
+            foreach (Stream stream in manifestStreams)
+                addedAssemblies.Add(Assembly.Load(ReadFully(stream)));
+            return addedAssemblies;
+        }
+
+        private static List<Stream> GetManifestStreams(Assembly assembly)
+        {
+            string[] resourcesNames = assembly.GetManifestResourceNames();
+            List<Stream> manifestStreams = new List<Stream>();
+            foreach (string name in resourcesNames)
+                manifestStreams.Add(assembly.GetManifestResourceStream(name));
+            return manifestStreams;
+        }
+
+
+        private static byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
         #endregion
 
 

@@ -1,13 +1,5 @@
 ﻿using Command.Errors;
 using Command.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commands.StandardCommands.AddNewCommand.Attributes
 {
