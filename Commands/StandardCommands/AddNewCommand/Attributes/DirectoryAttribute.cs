@@ -1,10 +1,5 @@
 ﻿using Command.Errors;
 using Command.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commands.StandardCommands.AddNewCommand.Attributes
 {
@@ -26,5 +21,7 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
         public Error Error { get; set; }
         public int Offset { get; set; }
         public int EndOffset { get; set; }
+
+        public virtual string Description { get; protected set; } = "'-d' - attribute for adding all files in the directory (and in the subdirectories);";
     }
 }

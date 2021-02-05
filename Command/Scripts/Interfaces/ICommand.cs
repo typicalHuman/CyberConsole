@@ -3,7 +3,7 @@
     /// <summary>
     /// Command abstraction.
     /// </summary>
-    public interface ICommand
+    public interface ICommand: IDescription
     {
         string Spelling { get; }
         /// <summary>

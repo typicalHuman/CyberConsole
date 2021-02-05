@@ -28,6 +28,8 @@ namespace StandardCommands
             new StringParameter()
         };
         public override IParameter[] Parameters { get; set; }
+        public override string Description { get; protected set; } = "'print' - command for printing info on the screen;\n"+
+                                                                      "Example - print 5 \"Hey\" - this construction will print 'Hey' 5 times;";
         #endregion
 
         #endregion

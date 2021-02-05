@@ -38,7 +38,7 @@
         <DockPanel Background="#18181b" >
             <!--#region App manipulation buttons-->
             <StackPanel HorizontalAlignment="Left" Margin="7 0" VerticalAlignment="Center"
-                    Orientation="Horizontal">
+                    Orientation="Horizontal"  DataContext="{x:Static local:App.ConsoleVM}">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                         <Setter Property="Foreground" Value="#579571"/>
@@ -50,9 +50,13 @@
                         <Setter Property="BorderThickness" Value="1.4"/>
                     </Style>
                 </StackPanel.Resources>
-                <Button Content="File"/>
-                <Button Content="Commands"/>
-                <Button Content="Add"/>
+                <Button Content="Commands">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding PrintHelpInfoCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
                 <Button Content="Shortcuts"/>
                 <Button Content="About"/>
             </StackPanel>

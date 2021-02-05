@@ -3,7 +3,7 @@
     /// <summary>
     /// Attribute abstraction.
     /// </summary>
-    public interface IAttrib: IParameter
+    public interface IAttrib: IParameter, IDescription
     {
         /// <summary>
         /// Attrubute action (you can just change logic of behavior and do nothing in action method).

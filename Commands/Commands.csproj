@@ -59,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="StandardCommands\AddNewCommand\AddCommand.cs" />
-    <Compile Include="StandardCommands\AddNewCommand\Attributes\FileParamsAttribute.cs" />
     <Compile Include="StandardCommands\AddNewCommand\Attributes\DirectoryAttribute.cs" />
     <Compile Include="StandardCommands\AddNewCommand\Attributes\FileAttribute.cs" />
     <Compile Include="StandardCommands\AddNewCommand\ProjectManager\ProjectManager.cs" />

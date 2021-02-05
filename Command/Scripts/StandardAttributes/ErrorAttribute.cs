@@ -21,5 +21,7 @@ namespace Command.StandardAttributes
         public Error Error { get; set; }
         public int Offset { get; set; }
         public int EndOffset { get; set; }
+
+        public virtual string Description { get; protected set; } = @"Oops ¯\_(ツ)_/¯ Error attribute!";
     }
 }

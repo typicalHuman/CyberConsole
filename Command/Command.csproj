@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scripts\Interfaces\IDescription.cs" />
     <Compile Include="Scripts\StandardAttributes\ErrorAttribute.cs" />
     <Compile Include="Scripts\StandardAttributes\SaveAttribute.cs" />
     <Compile Include="Scripts\ConsoleCommand.cs" />

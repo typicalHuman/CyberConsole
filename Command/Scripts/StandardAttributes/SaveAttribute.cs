@@ -14,7 +14,20 @@ namespace Command.StandardAttributes
 
         #region Private
 
-        private string Filter { get; set; } 
+        private string Filter { get; set; }
+
+        #endregion
+
+        #region Public 
+        public string Value { get; set; } = "-s";
+
+        public string Message { get; private set; }
+
+        public Error Error { get; set; }
+        public int Offset { get; set; }
+        public int EndOffset { get; set; }
+
+        public virtual string Description { get; protected set; } = "'-s' - attribute for saving object into .txt (or any other) files;";
 
         #endregion
 
@@ -47,17 +60,11 @@ namespace Command.StandardAttributes
             }
         }
 
-        public string Value { get; set; } = "-s";
-
         public bool Equals(string parameter)
         {
             return parameter.Equals(Value);
         }
 
-        public string Message { get; private set; }
-
-        public Error Error { get; set; }
-        public int Offset { get; set; }
-        public int EndOffset { get; set; }
+   
     }
 }

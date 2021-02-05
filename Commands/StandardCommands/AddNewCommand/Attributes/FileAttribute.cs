@@ -29,5 +29,7 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
         public Error Error { get; set; }
         public int Offset { get; set; }
         public int EndOffset { get; set; }
+
+        public virtual string Description { get; protected set; } = "'-f' - attribute for saving one or more files;";
     }
 }

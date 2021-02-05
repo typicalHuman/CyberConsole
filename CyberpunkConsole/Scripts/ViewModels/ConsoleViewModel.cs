@@ -1,5 +1,8 @@
-﻿using CyberpunkConsoleControl;
+﻿using Command.Interfaces;
+using CyberpunkConsoleControl;
 using ICSharpCode.AvalonEdit.Document;
+using System;
+using System.Collections.Generic;
 
 namespace CyberpunkConsole.Scripts.ViewModels
 {
@@ -63,24 +66,6 @@ namespace CyberpunkConsole.Scripts.ViewModels
 
         #endregion
 
-        #region CyberConsole
-
-        private CyberConsole cyberConsole = new CyberConsole();
-        /// <summary>
-        /// Cyber console control.
-        /// </summary>
-        public CyberConsole CyberConsole
-        {
-            get => cyberConsole;
-            set
-            {
-                cyberConsole = value;
-                OnPropertyChanged("CyberConsole");
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region Commands
@@ -96,6 +81,42 @@ namespace CyberpunkConsole.Scripts.ViewModels
             }));
         }
         #endregion
+
+        #region PrintHelpInfo
+
+        private RelayCommand printHelpInfoCommand;
+        public RelayCommand PrintHelpInfoCommand
+        {
+            get => printHelpInfoCommand ?? (printHelpInfoCommand = new RelayCommand(obj =>
+            {
+                List<Type> commandTypes = CommandsManager.GetCommandTypes();
+                int counter = 0;
+                foreach (Type t in commandTypes)
+                {
+                    ICommand command = (ICommand)Activator.CreateInstance(t);
+                    InsertText(command.Description);
+                    if (command.StandardAttributes != null)
+                        foreach (IAttrib attrib in command.StandardAttributes)
+                            InsertText($"\t{attrib.Description}");
+                    counter++;
+                    if(counter != commandTypes.Count)
+                        InsertText("");//go to next line.
+                }
+               
+            }));
+        }
+        #endregion
+
+        #endregion
+
+        #region Methods
+        
+        private void InsertText(string value, bool isNewLine = true)
+        {
+            Text = Text.Insert(Text.Length, value);
+            if (isNewLine)
+                Text = Text.Insert(Text.Length, "\n");
+        }
 
         #endregion
     }

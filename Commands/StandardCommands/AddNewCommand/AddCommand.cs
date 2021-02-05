@@ -14,8 +14,7 @@ namespace Commands.StandardCommands
         public override IAttrib[] StandardAttributes { get; protected set; } = new IAttrib[]
         {
             new FileAttribute(),
-            new DirectoryAttribute(),
-            new FileParamsAttribute()
+            new DirectoryAttribute()
         };
         public override IAttrib[] CurrentAttributes { get; set; }
         public override IParameter[] StandardParameters { get; protected set; } = new IParameter[]
@@ -24,6 +23,8 @@ namespace Commands.StandardCommands
         };
         public override IParameter[] Parameters { get; set; }
         public override string Spelling { get; protected set; } = "add_cmnd";
+
+        public override string Description { get; protected set; } = "'add_cmnd' - command for dynamically adding new commands from files;";
 
         public override void Action(string commandLineText, params object[] args)
         {

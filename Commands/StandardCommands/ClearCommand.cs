@@ -16,6 +16,7 @@ namespace Commands.StandardCommands
         public override IParameter[] StandardParameters { get; protected set; }
         public override IParameter[] Parameters { get; set; } = new IParameter[0];
         public override string Spelling { get; protected set; } = "clear";
+        public override string Description { get; protected set; } = "'clear' - command for clearing CyberpunkConsole screen;";
         #endregion
         #endregion
 

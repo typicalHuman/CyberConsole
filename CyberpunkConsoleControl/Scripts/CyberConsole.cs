@@ -445,7 +445,7 @@ namespace CyberpunkConsoleControl
         /// </summary>
         /// <param name="textToInsert">Text which will be inserted.</param>
         /// <param name="isNewLine">Insert with addition of new line.</param>
-        internal void InsertText(string textToInsert, bool isNewLine = false)
+        public void InsertText(string textToInsert, bool isNewLine = false)
         {
             Text = Text.Insert(Text.Length, $"{textToInsert}");
             if (isNewLine)

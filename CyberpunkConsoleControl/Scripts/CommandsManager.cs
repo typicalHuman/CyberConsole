@@ -66,10 +66,7 @@ namespace CyberpunkConsoleControl
         {
             if (commandLineText.Length > 0)
             {
-                Type commandType = typeof(ICommand);
-                UpdateAssemblyTypes();
-                List<Type> commandTypes = assemblyTypes.Where(t => commandType.IsAssignableFrom(t) && t.IsClass)
-                    .ToList();
+                List<Type> commandTypes = GetCommandTypes();
                 foreach (Type t in commandTypes)
                 {
                     ICommand command = (ICommand)Activator.CreateInstance(t);
@@ -82,6 +79,14 @@ namespace CyberpunkConsoleControl
             }
             console.InsertText(NOT_FOUND, true);
           
+        }
+
+        public static List<Type> GetCommandTypes()
+        {
+            Type commandType = typeof(ICommand);
+            UpdateAssemblyTypes();
+            return assemblyTypes.Where(t => commandType.IsAssignableFrom(t) && t.IsClass)
+                .ToList();
         }
 
         /// <summary>
@@ -99,7 +104,7 @@ namespace CyberpunkConsoleControl
 
         private static List<Assembly> GetAddedAssemblies(string assemblyPath)
         {
-            Assembly assembly = Assembly.LoadFrom(assemblyPath);
+            Assembly assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
             List<Stream> manifestStreams = GetManifestStreams(assembly);
             List<Assembly> addedAssemblies = new List<Assembly>();
             foreach (Stream stream in manifestStreams)

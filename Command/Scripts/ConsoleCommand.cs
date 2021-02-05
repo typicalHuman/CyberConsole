@@ -42,6 +42,8 @@ namespace Command
 
         public abstract string Spelling { get; protected set; }
 
+        public virtual string Description { get; protected set; } = "No description (~_~;)";
+
         #endregion
 
         #endregion

@@ -37,6 +37,8 @@ namespace Commands.StandardCommands
         };
         public override IParameter[] Parameters { get; set; }
         public override string Spelling { get; protected set; } = "for";
+        public override string Description { get; protected set; } = "'for' - command for executing command several times in a row;\n"+
+                                                                     "Example - for(1;11;1) \"print \"Hello\"\" - this construction will print 'Hello' 10 times;";
         #endregion
 
         #endregion
