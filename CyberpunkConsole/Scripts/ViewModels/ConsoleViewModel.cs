@@ -94,10 +94,17 @@ namespace CyberpunkConsole.Scripts.ViewModels
                 foreach (Type t in commandTypes)
                 {
                     ICommand command = (ICommand)Activator.CreateInstance(t);
-                    InsertText(command.Description);
+                    InsertText($"'{command.Spelling}' - {command.Description}");
                     if (command.StandardAttributes != null)
-                        foreach (IAttrib attrib in command.StandardAttributes)
-                            InsertText($"\t{attrib.Description}");
+                    {
+                        InsertText("ATTRIBUTES:");
+                        PrintParameters(command.StandardAttributes);
+                    }
+                    if(command.StandardParameters != null)
+                    {
+                        InsertText("PARAMETERS:");
+                        PrintParameters(command.StandardParameters);
+                    }
                     counter++;
                     if(counter != commandTypes.Count)
                         InsertText("");//go to next line.
@@ -116,6 +123,15 @@ namespace CyberpunkConsole.Scripts.ViewModels
             Text = Text.Insert(Text.Length, value);
             if (isNewLine)
                 Text = Text.Insert(Text.Length, "\n");
+        }
+
+        private void PrintParameters(IParameter[] parameters)
+        {
+            foreach (IParameter param in parameters)
+            {
+                string paramValue = param.Value == string.Empty ? param.GetType().Name : param.Value;
+                InsertText($"\t'{paramValue}' - {param.Description}");
+            }
         }
 
         #endregion

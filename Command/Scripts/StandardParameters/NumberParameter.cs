@@ -12,5 +12,7 @@ namespace Command.StandardParameters
         {
             return new NumberParameter().GetParameter(number.ToString()) as NumberParameter;
         }
+
+        public override string Description { get; protected set; } = "parameter for parsing number expressions;";
     }
 }

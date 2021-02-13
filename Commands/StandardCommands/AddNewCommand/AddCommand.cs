@@ -24,7 +24,7 @@ namespace Commands.StandardCommands
         public override IParameter[] Parameters { get; set; }
         public override string Spelling { get; protected set; } = "add_cmnd";
 
-        public override string Description { get; protected set; } = "'add_cmnd' - command for dynamically adding new commands from files;";
+        public override string Description { get; protected set; } = "command for dynamically adding new commands from files;";
 
         public override void Action(string commandLineText, params object[] args)
         {

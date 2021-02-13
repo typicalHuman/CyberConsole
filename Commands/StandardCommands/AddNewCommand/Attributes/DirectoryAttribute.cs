@@ -22,6 +22,6 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
         public int Offset { get; set; }
         public int EndOffset { get; set; }
 
-        public virtual string Description { get; protected set; } = "'-d' - attribute for adding all files in the directory (and in the subdirectories);";
+        public virtual string Description { get; protected set; } = "'attribute for adding all files in the directory (and in the subdirectories);";
     }
 }

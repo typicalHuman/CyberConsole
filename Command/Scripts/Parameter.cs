@@ -24,6 +24,8 @@ namespace Command
 
         public Error Error { get; set; }
 
+        public virtual string Description { get; protected set; } = "No description (~_~;)";
+
         /// <summary>
         /// Equals logic.
         /// </summary>
@@ -47,5 +49,6 @@ namespace Command
             Error = error;
             return this;
         }
+
     }
 }

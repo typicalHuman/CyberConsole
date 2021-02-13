@@ -27,7 +27,7 @@ namespace Command.StandardAttributes
         public int Offset { get; set; }
         public int EndOffset { get; set; }
 
-        public virtual string Description { get; protected set; } = "'-s' - attribute for saving object into .txt (or any other) files;";
+        public virtual string Description { get; protected set; } = "attribute for saving object into .txt (or any other) files;";
 
         #endregion
 

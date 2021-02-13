@@ -11,5 +11,7 @@ namespace Command.StandardParameters
     public class BracketParameter: Parameter<string>
     {
         protected override IParameterParser<string> Parser { get; set; } = new BracketParser();
+
+        public override string Description { get; protected set; } = "parameter for parsing bracket expressions;";
     }
 }

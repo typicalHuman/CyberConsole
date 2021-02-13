@@ -5,7 +5,7 @@ namespace Command.Interfaces
     /// <summary>
     /// Random data storage interface.
     /// </summary>
-    public interface IParameter: IOffset
+    public interface IParameter: IOffset, IDescription
     {
         /// <summary>
         /// String value of parameter.

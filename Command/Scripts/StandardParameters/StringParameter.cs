@@ -12,5 +12,7 @@ namespace Command.StandardParameters
         {
             return new StringParameter().GetParameter(text) as StringParameter;
         }
+
+        public override string Description { get; protected set; } = "parameter for parsing quote expressions;";
     }
 }

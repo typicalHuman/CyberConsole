@@ -160,7 +160,7 @@ namespace CyberpunkConsoleControl
             {
                 SetNextState setNextState = GetNextStateMethod();
                 Brush foreground = (Brush)GetValue(Control.ForegroundProperty);
-                while (TextView.VisualLines[TextView.VisualLines.Count - 1].FirstDocumentLine.LineNumber > LeftMarginStatesList.Count)
+                while (Document.LineCount > LeftMarginStatesList.Count)
                     setNextState?.Invoke();
                 if (setNextState == RemoveNextState)
                 {
