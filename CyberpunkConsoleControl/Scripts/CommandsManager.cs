@@ -94,12 +94,13 @@ namespace CyberpunkConsoleControl
         /// </summary>
         public static void UpdateAssemblyTypes()
         {
-              string projPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\"));
-               projPath = Path.Combine(projPath, "Commands\\bin\\Debug\\Commands.dll");
-            var ass = Assembly.LoadFile(@"C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Commands.dll");
-            assemblyTypes = ass
+            assemblyTypes = Assembly.Load("Commands")
                                     .GetTypes()
                                     .ToList();
+            string exportedPath = AppDomain.CurrentDomain.BaseDirectory + "\\ExportedCommands.dll";
+            var ass = Assembly.Load(File.ReadAllBytes(exportedPath));
+            if (File.Exists(exportedPath))
+             assemblyTypes.AddRange(ass.GetTypes().ToList());
         }
 
         private static List<Assembly> GetAddedAssemblies(string assemblyPath)

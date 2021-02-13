@@ -9,13 +9,8 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
         {
             if (args == null || args.Length == 0)
                 Error = new NullValueError();
-            else if (args.Length > 1)
-                Error = new ParametersExcessError("File attribute must have a single path to .cs file.");
             else
-            {
-                string filePath = args[0].ToString();
-                Message = ProjectManager.ProjectManager.AddFiles(filePath);
-            }
+                Message = ProjectManager.ProjectManager.AddFiles(args as string[]);
         }
 
         public string Value => "-f";

@@ -31,14 +31,18 @@ namespace Commands.StandardCommands
             IAttrib[] attribs = (Parser as StandardParser).GetAttributes(this, commandLineText);
             CurrentAttributes = ExtractAttributes(attribs).ToArray();
             SetParameters<StringParameter, string>(commandLineText);
-         
+            
             CyberConsole cc = args[0] as CyberConsole;
             if (cc != null && IsCorrectSyntax(true))
             {
-                if(CurrentAttributes.Length > 1)
+                if (CurrentAttributes.Length > 1)
+                {
                     Message = new ParametersExcessError("File attribute must have a single path to .cs file.").Message;
-                else
-                    CurrentAttributes[0].Action(Parameters.Select(p => p.Value).ToArray());
+                    return;
+                }
+                else if (CurrentAttributes.Length == 0)
+                    CurrentAttributes = new IAttrib[] { new FileAttribute() };
+                CurrentAttributes[0].Action(Parameters.Select(p => p.Value).ToArray());
                 Message = CurrentAttributes[0].Message;
             }
             else
