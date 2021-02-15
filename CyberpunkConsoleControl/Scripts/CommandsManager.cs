@@ -10,7 +10,8 @@ using System.Reflection;
 //TODO: refactoring. DONE
 //TODO: clear command. DONE.
 //TODO: fix copy of readonly segments. DONE.
-//TODO: add console functions to add commands with -f, -d, -fp attributes (file, directory, files_params)
+//TODO: add console functions to add commands with -f, -d attributes (file, directory)
+//TODO: last commands (rAlt | lAlt).
 
 namespace CyberpunkConsoleControl
 {
@@ -81,6 +82,9 @@ namespace CyberpunkConsoleControl
           
         }
 
+        /// <summary>
+        /// Get types which are inherited from <see cref="ICommand"/>
+        /// </summary>
         public static List<Type> GetCommandTypes()
         {
             Type commandType = typeof(ICommand);
@@ -94,15 +98,26 @@ namespace CyberpunkConsoleControl
         /// </summary>
         public static void UpdateAssemblyTypes()
         {
-            assemblyTypes = Assembly.Load("Commands")
+            assemblyTypes = Assembly.Load("Commands")//Commands - assembly with standard console commands.
                                     .GetTypes()
                                     .ToList();
-            string exportedPath = AppDomain.CurrentDomain.BaseDirectory + "\\ExportedCommands.dll";
-            var ass = Assembly.Load(File.ReadAllBytes(exportedPath));
+            string exportedPath = AppDomain.CurrentDomain.BaseDirectory + "\\ExportedCommands.dll";//ExportedCommands contains all added assemblies and files
             if (File.Exists(exportedPath))
-             assemblyTypes.AddRange(ass.GetTypes().ToList());
+            {
+                Assembly exportedAssembly = Assembly.Load(File.ReadAllBytes(exportedPath));
+                List<Assembly> addedAssemblies = GetAddedAssemblies(exportedPath);
+                addedAssemblies.Add(exportedAssembly);
+                assemblyTypes.AddRange(from assembly in addedAssemblies    //mini recursion for getting command types from embedded resources
+                                       let typesArray = assembly.GetTypes()
+                                       from type in typesArray
+                                       select type);
+            }
         }
 
+        /// <summary>
+        /// Get assemblies from embedded resources.
+        /// </summary>
+        /// <param name="assemblyPath">Path to assembly with resources.</param>
         private static List<Assembly> GetAddedAssemblies(string assemblyPath)
         {
             Assembly assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
@@ -113,6 +128,10 @@ namespace CyberpunkConsoleControl
             return addedAssemblies;
         }
 
+        /// <summary>
+        /// Get embedded reources streams.
+        /// </summary>
+        /// <param name="assembly">Assembly to get streams.</param>
         private static List<Stream> GetManifestStreams(Assembly assembly)
         {
             string[] resourcesNames = assembly.GetManifestResourceNames();
@@ -122,7 +141,10 @@ namespace CyberpunkConsoleControl
             return manifestStreams;
         }
 
-
+        /// <summary>
+        /// Convert <see cref="Stream"/> to <see cref="byte[]"/>.
+        /// </summary>
+        /// <param name="input">Stream to read.</param>
         private static byte[] ReadFully(Stream input)
         {
             byte[] buffer = new byte[16 * 1024];

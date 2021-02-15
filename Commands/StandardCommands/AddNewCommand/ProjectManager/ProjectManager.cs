@@ -43,19 +43,19 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         /// <param name="files">C# files paths.</param>
         public static string AddFiles(params string[] files)
         {
-            files = new[] { @"C:\Users\HP\Desktop\editorcommand.cs", @"C:\Users\HP\Desktop\AddType\Lib\bin\Debug\Lib.dll" };
+            files = new[] { @"C:\Users\HP\Desktop\editorcommand.cs", @"C:\Users\HP\Desktop\Lib\Lib\bin\Debug\Lib.dll" };
             if (files != null && files.Length > 0)
             {
                 string existenceResult = CheckAllFilesExists(files);
                 if (existenceResult == FILE_EXISTENCE_RESULT)
                 {
-                    string[] dlls = RemoveDLLs(files).ToArray();
+                    string[] _dlls = RemoveDLLs(files).ToArray();
                     files = files.Where(file => !file.Contains(DLL_EXTENSION)).ToArray();
                     if (files.Length > 0)
                     {
                         List<string> referencedAssemblies = GetReferencedAssemblies();
                         //files = MoveFiles(files, GetPathToMove(files));
-                        string buildResult = Build(referencedAssemblies.ToArray(), dlls = default(string[]), files);
+                        string buildResult = Build(referencedAssemblies.ToArray(), _dlls, files);
                         return buildResult;
                     }
                     return NO_CODEFILES_ERROR;
@@ -114,6 +114,9 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
                            .Where(fs => fs.Contains(DLL_EXTENSION));
         }
 
+        /// <summary>
+        /// Get Enumerable with dlls.
+        /// </summary>
         private static IEnumerable<string> RemoveDLLs(string[] files)
         {
             List<string> _files = files.ToList();
@@ -123,24 +126,23 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
                     _files.Remove(file);
                     yield return file;
                 }
-            files = _files.ToArray();
         }
 
 
-        #region FilesMove Methods
+        #region FilesCopy Methods
 
         /// <summary>
-        /// Move <paramref name="files"/> to directory with <paramref name="dirPath"/> path.
+        /// Copy <paramref name="files"/> to directory with <paramref name="dirPath"/> path.
         /// </summary>
-        /// <param name="files">Files to move.</param>
+        /// <param name="files">Files to copy.</param>
         /// <param name="dirPath">Final path.</param>
         /// <returns>Array of new paths.</returns>
-        private static string[] MoveFiles(string[] files, string dirPath)
+        private static string[] MoveCopy(string[] files, string dirPath)
         {
             for (int i = 0; i < files.Length; i++)
             {
                 string temp = Path.Combine(dirPath, Path.GetFileName(files[i]));
-                File.Move(files[i], temp);
+                File.Copy(files[i], temp);
                 files[i] = temp;
             }
             return files;
@@ -149,9 +151,9 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         /// <summary>
         /// Define directory depending on files.
         /// </summary>
-        /// <param name="files">Files to move.</param>
-        /// <returns>Path to directory in which files will be moved.</returns>
-        private static string GetPathToMove(string[] files)
+        /// <param name="files">Files to copy.</param>
+        /// <returns>Path to directory in which files will be copied.</returns>
+        private static string GetPathToCopy(string[] files)
         {
             if (files.Length > 0)
             {
