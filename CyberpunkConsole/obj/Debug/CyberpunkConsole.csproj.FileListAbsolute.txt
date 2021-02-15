@@ -1,9 +1,3 @@
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole.exe.config
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\Scripts\Views\MainWindow.g.cs
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\App.g.cs
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole_MarkupCompile.cache
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole_MarkupCompile.lref
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole.csprojAssemblyReference.cache
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\CyberpunkConsole.exe.config
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\CyberpunkConsole.exe
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\CyberpunkConsole.pdb
@@ -143,6 +137,12 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\fr\Han
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\ko-KR\HandyControl.resources.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\ru\HandyControl.resources.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\tr\HandyControl.resources.dll
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole.csprojAssemblyReference.cache
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole.exe.config
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\Scripts\Views\MainWindow.g.cs
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\App.g.cs
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole_MarkupCompile.cache
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole_MarkupCompile.lref
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\App.baml
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\Scripts\Views\MainWindow.baml
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\obj\Debug\CyberpunkConsole.g.resources

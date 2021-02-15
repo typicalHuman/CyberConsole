@@ -7,7 +7,10 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
     {
         public void Action(object[] args = null)
         {
-
+            if (args == null || args.Length == 0)
+                Error = new NullValueError();
+            else
+                Message = ProjectManager.ProjectManager.AddDirectories(args as string[]);
         }
 
         public string Value => "-d";
@@ -22,6 +25,6 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
         public int Offset { get; set; }
         public int EndOffset { get; set; }
 
-        public virtual string Description { get; protected set; } = "'attribute for adding all files in the directory (and in the subdirectories);";
+        public virtual string Description { get; protected set; } = "'attribute for adding all files in the directories (and in the subdirectories);";
     }
 }

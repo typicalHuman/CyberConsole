@@ -1,18 +1,11 @@
 ﻿using System;
-using System.CodeDom;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using CyberpunkConsoleControl;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Windows.Converters;
 using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using System.CodeDom.Compiler;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using System.Runtime.InteropServices;
 
 namespace Commands.StandardCommands.AddNewCommand.ProjectManager
 {
@@ -23,10 +16,13 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         private const string LIBRARY_NAME = "Commands";
 
         private const string DLL_EXTENSION = ".dll";
+        private const string CS_EXTENSION = ".cs";
 
-        private const string FILE_EXISTENCE_RESULT = "No errors.";
+        private const string NO_ERRORS_RESULT = "No errors.";
         private const string NO_FILES_ERROR = "No files to build.";
         private const string NO_CODEFILES_ERROR = "No .cs files to build.";
+        private const string ONLY_DIRS_ERROR = "Input contains path to file (-d parameter only for directories).";
+        private const string NO_DIRECTORIES_ERROR = "No directories to build.";
 
         private const string EXPORTED_DLLS = @"\ExportedCommands\ExportedDLLs";
         private const string EXPORTED_FILES =@"\ExportedCommands\ExportedFiles";
@@ -41,13 +37,14 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         /// Build assembly with <paramref name="files"/> (including .dll files).
         /// </summary>
         /// <param name="files">C# files paths.</param>
+        /// <returns>Build result.</returns>
         public static string AddFiles(params string[] files)
         {
-            files = new[] { @"C:\Users\HP\Desktop\editorcommand.cs", @"C:\Users\HP\Desktop\Lib\Lib\bin\Debug\Lib.dll" };
+            files = new[] { @"C:\Users\HP\Desktop\editorcommand.cs" };
             if (files != null && files.Length > 0)
             {
                 string existenceResult = CheckAllFilesExists(files);
-                if (existenceResult == FILE_EXISTENCE_RESULT)
+                if (existenceResult == NO_ERRORS_RESULT)
                 {
                     string[] _dlls = RemoveDLLs(files).ToArray();
                     files = files.Where(file => !file.Contains(DLL_EXTENSION)).ToArray();
@@ -65,10 +62,70 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
             return NO_FILES_ERROR;
         }
 
+        /// <summary>
+        /// Build assembly with all files in <paramref name="directories"/>.
+        /// </summary>
+        /// <param name="directories">Paths to directories</param>
+        /// <returns>Build result.</returns>
+        public static string AddDirectories(params string[] directories)
+        {
+            if(directories != null && directories.Length > 0)
+            {
+                string checkDirsResult = CheckDirectories(directories);
+                if(checkDirsResult == NO_ERRORS_RESULT)
+                {
+                    List<string> files = new List<string>();
+                    for(int i = 0; i < directories.Length; i++)
+                        files.AddRange(GetDirectoryFiles(directories[i]));
+                    if (files.Count == 0)
+                        return NO_FILES_ERROR;
+                    return AddFiles(files.ToArray());
+                }
+                return checkDirsResult;
+            }
+            return NO_DIRECTORIES_ERROR;
+        }
 
         #endregion
 
         #region Private
+
+        #region AddDirectories Methods
+
+
+        /// <summary>
+        /// Get cs and dll files in directory.
+        /// </summary>
+        /// <param name="path">Path to directory.</param>
+        private static IEnumerable<string> GetDirectoryFiles(string path)
+        {
+            return Directory
+                   .EnumerateFiles(path, "*.*", SearchOption.AllDirectories)//get all files
+                   .Where(file => file.ToLower().EndsWith(CS_EXTENSION) || file.ToLower().EndsWith(DLL_EXTENSION));//select .cs and .dll files
+        }
+
+        /// <summary>
+        /// Check: is paths contains only pointers to directories.
+        /// </summary>
+        /// <param name="directories">Array to check.</param>
+        private static string CheckDirectories(string[] directories)
+        {
+            for (int i = 0; i < directories.Length; i++)
+            {
+                if (directories[i] == null || directories[i].Length == 0)
+                    return $"Path with index {i} is null.";
+                else if (directories[i].Contains('.'))//if path contain extension symbol - it means that it's not a directory.
+                    return ONLY_DIRS_ERROR;
+                else if (!Directory.Exists(directories[i]))
+                    return $"Directory with path '{directories[i]}' doesn't exist.";
+            }
+            return NO_ERRORS_RESULT;
+        }
+
+        #endregion
+
+
+        #region AddFilesMethods
 
         /// <summary>
         /// Get referenced assemblies of current assembly (.exe file).
@@ -91,14 +148,14 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         /// <returns></returns>
         private static string CheckAllFilesExists(string[] files)
         {
-            foreach (string file in files)
-                if (!File.Exists(file))
-                {
-                    if (file.Length == 0)
-                        return NO_FILES_ERROR;
-                    return file;
-                }
-            return FILE_EXISTENCE_RESULT;
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (files[i] == null || files[i].Length == 0)
+                    return $"Path with index {i} is null.";
+                else if (!File.Exists(files[i]))
+                    return $"File with path '{files[i]}' doesn't exist.";
+            }
+            return NO_ERRORS_RESULT;
         }
 
         /// <summary>
@@ -128,6 +185,7 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
                 }
         }
 
+        #endregion
 
         #region FilesCopy Methods
 
