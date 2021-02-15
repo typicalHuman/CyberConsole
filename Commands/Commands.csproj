@@ -42,6 +42,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -61,6 +64,7 @@
     <Compile Include="StandardCommands\AddNewCommand\AddCommand.cs" />
     <Compile Include="StandardCommands\AddNewCommand\Attributes\DirectoryAttribute.cs" />
     <Compile Include="StandardCommands\AddNewCommand\Attributes\FileAttribute.cs" />
+    <Compile Include="StandardCommands\AddNewCommand\ProjectManager\Module.cs" />
     <Compile Include="StandardCommands\AddNewCommand\ProjectManager\ProjectManager.cs" />
     <Compile Include="StandardCommands\ClearCommand.cs" />
     <Compile Include="StandardCommands\LoopCommand.cs" />

@@ -6,11 +6,22 @@ using CyberpunkConsoleControl;
 using System.Collections.Generic;
 using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using System.CodeDom.Compiler;
+using Newtonsoft.Json;
 
 namespace Commands.StandardCommands.AddNewCommand.ProjectManager
 {
-    class ProjectManager
+    static class ProjectManager
     {
+        #region Ctor
+
+        static ProjectManager()
+        {
+            InitFromJSONData();
+            modulesFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\modules.json";
+        }
+
+        #endregion
+
         #region Constants
 
         private const string LIBRARY_NAME = "Commands";
@@ -25,7 +36,19 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         private const string NO_DIRECTORIES_ERROR = "No directories to build.";
 
         private const string EXPORTED_DLLS = @"\ExportedCommands\ExportedDLLs";
-        private const string EXPORTED_FILES =@"\ExportedCommands\ExportedFiles";
+        private const string EXPORTED_FILES = @"\ExportedCommands\ExportedFiles";
+
+        #endregion
+
+        #region Properties
+
+        #region Private
+
+        private static List<Module> Modules { get; set; } = new List<Module>();
+
+        private static string modulesFilePath { get; set; } = string.Empty;
+
+        #endregion
 
         #endregion
 
@@ -40,7 +63,7 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         /// <returns>Build result.</returns>
         public static string AddFiles(params string[] files)
         {
-            files = new[] { @"C:\Users\HP\Desktop\editorcommand.cs" };
+            //files = new[] { @"C:\Users\HP\Desktop\editorcommand.cs" };
             if (files != null && files.Length > 0)
             {
                 string existenceResult = CheckAllFilesExists(files);
@@ -53,6 +76,8 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
                         List<string> referencedAssemblies = GetReferencedAssemblies();
                         //files = MoveFiles(files, GetPathToMove(files));
                         string buildResult = Build(referencedAssemblies.ToArray(), _dlls, files);
+                        Modules.Add(new Module(files, _dlls, $"Module #{Modules.Count + 1}"));
+                        SaveJSONData();
                         return buildResult;
                     }
                     return NO_CODEFILES_ERROR;
@@ -69,13 +94,13 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         /// <returns>Build result.</returns>
         public static string AddDirectories(params string[] directories)
         {
-            if(directories != null && directories.Length > 0)
+            if (directories != null && directories.Length > 0)
             {
                 string checkDirsResult = CheckDirectories(directories);
-                if(checkDirsResult == NO_ERRORS_RESULT)
+                if (checkDirsResult == NO_ERRORS_RESULT)
                 {
                     List<string> files = new List<string>();
-                    for(int i = 0; i < directories.Length; i++)
+                    for (int i = 0; i < directories.Length; i++)
                         files.AddRange(GetDirectoryFiles(directories[i]));
                     if (files.Count == 0)
                         return NO_FILES_ERROR;
@@ -123,7 +148,6 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         }
 
         #endregion
-
 
         #region AddFilesMethods
 
@@ -226,7 +250,7 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
             return "No files to include.";
         }
 
-        
+
         /// <summary>
         /// Create directory for multiples files.
         /// </summary>
@@ -263,6 +287,7 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
             CompilerParameters parameters = GetCompilerParameters(referencedAssemblies, dlls);
             TempFileCollection tfc = new TempFileCollection(Assembly.GetEntryAssembly().Location, false);
             CompilerResults cr = new CompilerResults(tfc);
+            files = ConcatFiles(files);
             cr = compiler.CompileAssemblyFromFile(parameters, files);
             string compileResults = GetResultString(cr);
             return compileResults;
@@ -293,21 +318,32 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         private static CompilerParameters GetCompilerParameters(string[] referencedAssemblies, string[] dlls = default(string[]))
         {
             CompilerParameters parameters = new CompilerParameters();
-            parameters.OutputAssembly = AppDomain.CurrentDomain.BaseDirectory +"\\ExportedCommands.dll";
-            foreach (string assemblyPath in referencedAssemblies)
-                parameters.ReferencedAssemblies.Add(assemblyPath);
-            if(dlls != null)
-                foreach (string dll in dlls)
-                {
-                    parameters.ReferencedAssemblies.Add(dll);
-                    parameters.EmbeddedResources.Add(dll);
-                }
-            AddStandardWPFAssemblies(parameters);
+            parameters.OutputAssembly = AppDomain.CurrentDomain.BaseDirectory + "\\ExportedCommands.dll";
+            AddResources(parameters, referencedAssemblies, dlls);
             parameters.WarningLevel = 3;
             parameters.CompilerOptions = "/target:library /optimize";
             parameters.GenerateExecutable = false;
             parameters.GenerateInMemory = false;
             return parameters;
+        }
+
+        /// <summary>
+        /// Add references and resources to <paramref name="parameters"/>.
+        /// </summary>
+        private static void AddResources(CompilerParameters parameters, string[] referencedAssemblies, string[] dlls)
+        {
+            foreach (string assemblyPath in referencedAssemblies)
+                parameters.ReferencedAssemblies.Add(assemblyPath);
+            if (dlls != null)
+            {
+                foreach (string dll in dlls)
+                {
+                    parameters.ReferencedAssemblies.Add(dll);
+                    parameters.EmbeddedResources.Add(dll);
+                }
+            }
+            AddStandardWPFAssemblies(parameters);
+            AddPreviousDlls(parameters);
         }
         /// <summary>
         /// To work with <see cref="CyberConsole"/> assembly needs some wpf libraries.
@@ -324,6 +360,58 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
             cp.ReferencedAssemblies.Add(path);
         }
 
+        /// <summary>
+        /// Add dlls which were included in previous builds.
+        /// </summary>
+        /// <param name="parameters"></param>
+        private static void AddPreviousDlls(CompilerParameters parameters)
+        {
+            foreach(Module m in Modules)
+            {
+                foreach (string path in m.DllsPaths)
+                    parameters.ReferencedAssemblies.Add(path);
+            }
+        }
+
+        /// <summary>
+        /// Concat new files and files which were in assembly ExportedTypes.
+        /// </summary>
+        private static string[] ConcatFiles(string[] newFiles)
+        {
+            List<string> files = newFiles.ToList();
+            foreach (Module m in Modules)
+            {
+                foreach (string path in m.FilesPaths)
+                    files.Add(path);
+            }
+            return files.ToArray();
+        }
+
+
+        #endregion
+
+        #region JSON
+
+        private static void SaveJSONData()
+        {
+                using (StreamWriter sw = File.CreateText(modulesFilePath))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(sw, Modules);
+                }
+        }
+
+        private static void InitFromJSONData()
+        {
+            if (File.Exists(modulesFilePath))
+            {
+                using (StreamReader file = File.OpenText(modulesFilePath))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    Modules = (List<Module>)serializer.Deserialize(file, typeof(List<Module>));
+                }
+            }
+        }
 
         #endregion
 
@@ -331,7 +419,7 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
 
         #endregion
 
-   
+
 
 
     }

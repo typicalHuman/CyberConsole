@@ -76,3 +76,5 @@ C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.cspro
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csproj.CopyComplete
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.dll
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.pdb
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Newtonsoft.Json.dll
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Newtonsoft.Json.xml

@@ -164,3 +164,5 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\bin\ro
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\bin\roslyn\vbc.exe
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\bin\roslyn\VBCSCompiler.exe
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\bin\roslyn\VBCSCompiler.exe.config
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Newtonsoft.Json.dll
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsole\bin\Debug\Newtonsoft.Json.xml
