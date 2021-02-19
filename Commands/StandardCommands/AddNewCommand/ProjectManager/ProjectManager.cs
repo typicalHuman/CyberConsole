@@ -38,6 +38,11 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         private const string EXPORTED_DLLS = @"\ExportedCommands\ExportedDLLs";
         private const string EXPORTED_FILES = @"\ExportedCommands\ExportedFiles";
 
+        private const string DEFAULT_MODULE = "<default>";
+
+        private const string FAILED_BUILD_RESULT = "FAILED!";
+        private const string SUCCESS_BUILD_RESULT = "SUCCESS!";
+
         #endregion
 
         #region Properties
@@ -76,8 +81,11 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
                         List<string> referencedAssemblies = GetReferencedAssemblies();
                         //files = MoveFiles(files, GetPathToMove(files));
                         string buildResult = Build(referencedAssemblies.ToArray(), _dlls, files);
-                        Modules.Add(new Module(files, _dlls, $"Module #{Modules.Count + 1}"));
-                        SaveJSONData();
+                        if (buildResult.Contains(SUCCESS_BUILD_RESULT))
+                        {
+                            Modules.Add(new Module(files, _dlls, $"Module #{Modules.Count + 1}"));
+                            SaveJSONData();
+                        }
                         return buildResult;
                     }
                     return NO_CODEFILES_ERROR;
@@ -150,7 +158,6 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         #endregion
 
         #region AddFilesMethods
-
         /// <summary>
         /// Get referenced assemblies of current assembly (.exe file).
         /// </summary>
@@ -305,9 +312,11 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
                 string errorString = string.Empty;
                 foreach (CompilerError ce in cr.Errors)
                     errorString += $"{ce.ErrorNumber}:{ce.ErrorText}\n";
+                errorString.Insert(errorString.Length, $"\n{FAILED_BUILD_RESULT}");
                 return errorString;
             }
-            return string.Join(" ", cr.Output.Cast<string>().ToArray());
+            string result = string.Join(" ", cr.Output.Cast<string>().ToArray());
+            return result.Insert(result.Length, $"\n{SUCCESS_BUILD_RESULT}");
         }
 
         /// <summary>
