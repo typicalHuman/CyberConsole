@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
-namespace Commands.StandardCommands.AddNewCommand.ProjectManager
+namespace Commands
 {
-    internal class Module
+    public class Module
     {
+        [JsonProperty]
         public string[] FilesPaths { get; private set; }
+        [JsonProperty]
         public string[] DllsPaths { get; private set; }
+        [JsonProperty]
         public string Name { get; private set; }
 
         public Module(string[] files, string[] dlls, string name)

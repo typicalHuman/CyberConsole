@@ -53,12 +53,18 @@
                 <Button Content="Commands">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding PrintHelpInfoCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding PrintCommandsInfoCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
                 <Button Content="Shortcuts"/>
-                <Button Content="About"/>
+                <Button Content="Modules">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding PrintModulesInfoCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </StackPanel>
             <!--#endregion-->
             <!--#region Window buttons panel-->

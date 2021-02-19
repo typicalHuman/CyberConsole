@@ -10,7 +10,7 @@ namespace Commands.StandardCommands.AddNewCommand.Attributes
             if (args == null || args.Length == 0)
                 Error = new NullValueError();
             else
-                Message = ProjectManager.ProjectManager.AddDirectories(args as string[]);
+                Message = ProjectManager.AddDirectories(args as string[]);
         }
 
         public string Value => "-d";

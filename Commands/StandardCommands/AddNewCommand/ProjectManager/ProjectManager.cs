@@ -8,16 +8,16 @@ using Microsoft.CodeDom.Providers.DotNetCompilerPlatform;
 using System.CodeDom.Compiler;
 using Newtonsoft.Json;
 
-namespace Commands.StandardCommands.AddNewCommand.ProjectManager
+namespace Commands
 {
-    static class ProjectManager
+    public static class ProjectManager
     {
         #region Ctor
 
         static ProjectManager()
         {
-            InitFromJSONData();
             modulesFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\modules.json";
+            InitFromJSONData();
         }
 
         #endregion
@@ -60,6 +60,11 @@ namespace Commands.StandardCommands.AddNewCommand.ProjectManager
         #region Methods
 
         #region Public
+
+        public static List<Module> GetModules()
+        {
+            return Modules;
+        }
 
         /// <summary>
         /// Build assembly with <paramref name="files"/> (including .dll files).

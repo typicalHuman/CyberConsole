@@ -1,4 +1,5 @@
 ﻿using Command.Interfaces;
+using Commands;
 using CyberpunkConsoleControl;
 using ICSharpCode.AvalonEdit.Document;
 using System;
@@ -82,12 +83,12 @@ namespace CyberpunkConsole.Scripts.ViewModels
         }
         #endregion
 
-        #region PrintHelpInfo
+        #region PrintCommandsInfo
 
-        private RelayCommand printHelpInfoCommand;
-        public RelayCommand PrintHelpInfoCommand
+        private RelayCommand printCommandsInfoCommand;
+        public RelayCommand PrintCommandsInfoCommand
         {
-            get => printHelpInfoCommand ?? (printHelpInfoCommand = new RelayCommand(obj =>
+            get => printCommandsInfoCommand ?? (printCommandsInfoCommand = new RelayCommand(obj =>
             {
                 List<Type> commandTypes = CommandsManager.GetCommandTypes();
                 int counter = 0;
@@ -114,10 +115,43 @@ namespace CyberpunkConsole.Scripts.ViewModels
         }
         #endregion
 
+        #region PrintModulesInfo
+
+        private RelayCommand printModulesInfoCommand;
+        public RelayCommand PrintModulesInfoCommand
+        {
+            get => printModulesInfoCommand ?? (printModulesInfoCommand = new RelayCommand(obj =>
+            {
+                int counter = ProjectManager.GetModules().Count;
+                foreach(Module m in ProjectManager.GetModules())
+                {
+                    counter--;
+                    InsertText($"{m.Name}:");
+                    InsertFilesInfo(".CS", m.FilesPaths);
+                    InsertFilesInfo(".DLL", m.DllsPaths);
+                    if(counter > 0)
+                        InsertText("");
+                }
+            }));
+        }
+        #endregion
+
         #endregion
 
         #region Methods
-        
+
+        private void InsertFilesInfo(string fileType, string[] files)
+        {
+            if (files != null && files.Length > 0)
+            {
+                InsertText($"{fileType} FILES:");
+                foreach (string file in files)
+                    InsertText($"\t{file}");
+            }
+            else
+                InsertText($"NO {fileType} FILES.");
+        }
+
         private void InsertText(string value, bool isNewLine = true)
         {
             Text = Text.Insert(Text.Length, value);
