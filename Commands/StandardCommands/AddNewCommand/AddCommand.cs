@@ -3,7 +3,6 @@ using Command.Interfaces;
 using Command.StandardParameters;
 using System.Linq;
 using Commands.StandardCommands.AddNewCommand.Attributes;
-using CyberpunkConsoleControl;
 using Command.Parsers;
 using Command.Errors;
 
@@ -19,7 +18,7 @@ namespace Commands.StandardCommands
         public override IAttrib[] CurrentAttributes { get; set; }
         public override IParameter[] StandardParameters { get; protected set; } = new IParameter[]
         {
-            new StringParameter()
+            new StringParameter(), new QuoteStringParameter()
         };
         public override IParameter[] Parameters { get; set; }
         public override string Spelling { get; protected set; } = "add_cmnd";
@@ -31,23 +30,33 @@ namespace Commands.StandardCommands
             IAttrib[] attribs = (Parser as StandardParser).GetAttributes(this, commandLineText);
             CurrentAttributes = ExtractAttributes(attribs).ToArray();
             SetParameters<StringParameter, string>(commandLineText);
-            
-            CyberConsole cc = args[0] as CyberConsole;
-            if (cc != null && IsCorrectSyntax(true))
+            SetParameters<QuoteStringParameter, string>(commandLineText);
+            if (IsCorrectSyntax(true))
             {
-                if (CurrentAttributes.Length > 1)
+                if (IsCorrectParameters())
                 {
-                    Message = new ParametersExcessError("File attribute must have a single path to .cs file.").Message;
-                    return;
+                    if (CurrentAttributes.Length > 1)
+                    {
+                        Message = new ParametersExcessError("File attribute must have a single path to .cs file.").Message;
+                        return;
+                    }
+                    else if (CurrentAttributes.Length == 0)
+                        CurrentAttributes = new IAttrib[] { new FileAttribute() };
+                    CurrentAttributes[0].Action(Parameters.Select(p => p.Value).ToArray());
+                    Message = CurrentAttributes[0].Message;
                 }
-                else if (CurrentAttributes.Length == 0)
-                    CurrentAttributes = new IAttrib[] { new FileAttribute() };
-                CurrentAttributes[0].Action(Parameters.Select(p => p.Value).ToArray());
-                Message = CurrentAttributes[0].Message;
+                else
+                    Message = "Module should contain only one name.";
             }
             else
                 Message = GetErrorMessage(commandLineText);
+        }
 
+        private bool IsCorrectParameters()
+        {
+            if (Parameters.Where(p => p.GetType() == typeof(QuoteStringParameter)).Count() > 1)
+                return false;
+            return true;
         }
     }
 }
