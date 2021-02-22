@@ -1,11 +1,6 @@
 ﻿using Command;
 using Command.Interfaces;
 using Command.StandardParameters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Commands.StandardCommands
 {
@@ -18,7 +13,8 @@ namespace Commands.StandardCommands
             new NumberParameter()
         };
         public override IParameter[] Parameters { get; set; }
-        public override string Spelling { get; protected set; } = "rm_command";
+        public override string Spelling { get; protected set; } = "rm_cmnd";
+        public override string Description { get; protected set; } = "remove command by index;";
 
         public override void Action(string commandLineText, params object[] args)
         {
