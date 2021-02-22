@@ -69,6 +69,8 @@ namespace Commands
         /// <param name="index">Index of element to remove.</param>
         public static string RemoveModule(int index)
         {
+            if (Modules.Count == 0)
+                return "No modules to remove.";
             Modules.RemoveAt(index);
             SaveJSONData();
             return BuildModules();

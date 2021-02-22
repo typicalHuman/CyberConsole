@@ -70,7 +70,8 @@
     <Compile Include="StandardCommands\LoopCommand.cs" />
     <Compile Include="StandardCommands\PrintCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StandardCommands\RemoveCommand.cs" />
+    <Compile Include="StandardCommands\RemoveCommandCmnd\Attributes\AllAttribute.cs" />
+    <Compile Include="StandardCommands\RemoveCommandCmnd\RemoveCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Command\Command.csproj">
