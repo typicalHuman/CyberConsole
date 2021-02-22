@@ -78,6 +78,7 @@
     <Compile Include="Scripts\StandardParameters\ParameterParsers\NumberParser.cs" />
     <Compile Include="Scripts\StandardParameters\ParameterParsers\ParameterParser.cs" />
     <Compile Include="Scripts\StandardParameters\ParameterParsers\StringParser.cs" />
+    <Compile Include="Scripts\StandardParameters\QuoteStringParameter.cs" />
     <Compile Include="Scripts\StandardParameters\StringParameter.cs" />
     <Compile Include="Scripts\Parsers\StandardParser.cs" />
   </ItemGroup>

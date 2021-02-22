@@ -69,11 +69,22 @@ namespace Commands
         /// <param name="index">Index of element to remove.</param>
         public static string RemoveModule(int index)
         {
-            if (Modules.Count == 0)
-                return "No modules to remove.";
-            Modules.RemoveAt(index);
-            SaveJSONData();
-            return BuildModules();
+            Action<int> func = (ind) => {
+                Modules.RemoveAt(ind);
+            };
+            return RemoveModule(func, index);
+        }
+
+        /// <summary>
+        /// Remove module by name.
+        /// </summary>
+        /// <param name="name">Module name.</param>
+        public static string RemoveModule(string name)
+        {
+            Action<string> func = (_name) => {
+                Modules.Remove(Modules.Find(m => m.Name == _name));
+            };
+            return RemoveModule(func, name);
         }
 
         /// <summary>
@@ -145,6 +156,19 @@ namespace Commands
         #endregion
 
         #region Private
+
+        #region RemoveModule Methods
+
+        private static string RemoveModule<T>(Action<T> removeMethod, T parameter)
+        {
+            if (Modules.Count == 0)
+                return "No modules to remove.";
+            removeMethod(parameter);
+            SaveJSONData();
+            return BuildModules();
+        }
+
+        #endregion
 
         #region AddDirectories Methods
 

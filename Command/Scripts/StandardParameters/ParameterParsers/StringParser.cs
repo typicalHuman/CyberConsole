@@ -14,7 +14,7 @@ namespace Command.StandardParameters.ParameterParsers
         /// <summary>
         /// Pattern for defining strings in quotes.
         /// </summary>
-        private const string REGEX_PATTERN = ".*?(\\\".*\\\").*?";
+        private const string REGEX_PATTERN = ".*?(\\\".*\\\").*?|.*?('.*').*?";
 
         #endregion
 
