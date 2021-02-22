@@ -122,15 +122,18 @@ namespace CyberpunkConsole.Scripts.ViewModels
         {
             get => printModulesInfoCommand ?? (printModulesInfoCommand = new RelayCommand(obj =>
             {
-                int counter = ProjectManager.GetModules().Count;
-                foreach(Module m in ProjectManager.GetModules())
+                int? counter = ProjectManager.GetModules()?.Count;
+                if (counter != null)
                 {
-                    counter--;
-                    InsertText($"{m.Name}:");
-                    InsertFilesInfo(".CS", m.FilesPaths);
-                    InsertFilesInfo(".DLL", m.DllsPaths);
-                    if(counter > 0)
-                        InsertText("");
+                    foreach (Module m in ProjectManager.GetModules())
+                    {
+                        counter--;
+                        InsertText($"{m.Name}:");
+                        InsertFilesInfo(".CS", m.FilesPaths);
+                        InsertFilesInfo(".DLL", m.DllsPaths);
+                        if (counter > 0)
+                            InsertText("");
+                    }
                 }
             }));
         }

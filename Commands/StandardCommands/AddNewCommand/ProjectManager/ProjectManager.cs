@@ -18,6 +18,8 @@ namespace Commands
         {
             modulesFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\modules.json";
             InitFromJSONData();
+            if (Modules == null)
+                Modules = new List<Module>();
         }
 
         #endregion
@@ -61,6 +63,20 @@ namespace Commands
 
         #region Public
 
+        /// <summary>
+        /// Remove module by index.
+        /// </summary>
+        /// <param name="index">Index of element to remove.</param>
+        public static string RemoveModule(int index)
+        {
+            Modules.RemoveAt(index);
+            SaveJSONData();
+            return BuildModules();
+        }
+
+        /// <summary>
+        /// Get code modules.
+        /// </summary>
         public static List<Module> GetModules()
         {
             return Modules;
@@ -300,10 +316,28 @@ namespace Commands
             TempFileCollection tfc = new TempFileCollection(Assembly.GetEntryAssembly().Location, false);
             CompilerResults cr = new CompilerResults(tfc);
             files = ConcatFiles(files);
+            if (files.Length == 0)//it means that we need to clear all files in the assembly (bc or modules is removed or if it's attribute to clear all files)
+            {
+                File.Delete(parameters.OutputAssembly);
+                return "Assembly is clear.";
+            }
             cr = compiler.CompileAssemblyFromFile(parameters, files);
             string compileResults = GetResultString(cr);
             return compileResults;
         }
+
+        private static string BuildModules()
+        {
+            List<string> dllFiles = new List<string>();
+            List<string> csFiles = new List<string>();
+            foreach (Module m in Modules)
+            {
+                csFiles.AddRange(m.FilesPaths);
+                dllFiles.AddRange(m.DllsPaths);
+            }
+            return Build(GetReferencedAssemblies().ToArray(), dllFiles.ToArray(), csFiles.ToArray());
+        }
+
 
         /// <summary>
         /// Get result string by <paramref name="cr"/>.
