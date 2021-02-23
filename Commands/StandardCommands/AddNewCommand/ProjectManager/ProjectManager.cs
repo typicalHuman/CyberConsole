@@ -121,7 +121,7 @@ namespace Commands
                             string _moduleName = moduleName;
                             if (moduleName == null)
                                 _moduleName = $"Module #{Modules.Count + 1}";
-                            Modules.Add(new Module(files, _dlls, moduleName));
+                            Modules.Add(new Module(files, _dlls, _moduleName));
                             SaveJSONData();
                         }
                         return buildResult;
@@ -168,8 +168,9 @@ namespace Commands
             if (Modules.Count == 0)
                 return "No modules to remove.";
             removeMethod(parameter);
+            string result = BuildModules();
             SaveJSONData();
-            return BuildModules();
+            return result;
         }
 
         #endregion
@@ -469,12 +470,11 @@ namespace Commands
             return newFiles;
         }
         /// <summary>
-        /// 
+        /// Checks is Modules count in json differs with modules count in rt.
         /// </summary>
-        /// <returns></returns>
         private static bool IsModulesRemoved()
         {
-            return Modules.Count == GetFromJSONData()?.Count;
+            return Modules.Count != GetFromJSONData()?.Count;
         }
 
 

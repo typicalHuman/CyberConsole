@@ -5,6 +5,7 @@ using System.Linq;
 using Commands.StandardCommands.AddNewCommand.Attributes;
 using Command.Parsers;
 using Command.Errors;
+using CyberpunkConsoleControl;
 
 namespace Commands.StandardCommands
 {

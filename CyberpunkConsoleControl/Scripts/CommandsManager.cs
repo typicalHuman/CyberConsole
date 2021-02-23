@@ -10,8 +10,9 @@ using System.Reflection;
 //TODO: refactoring. DONE
 //TODO: clear command. DONE.
 //TODO: fix copy of readonly segments. DONE.
-//TODO: add console functions to add commands with -f, -d attributes (file, directory)
+//TODO: add console functions to add commands with -f, -d attributes (file, directory) DONE.
 //TODO: last commands (rAlt | lAlt).
+//TODO: pre-message.
 
 namespace CyberpunkConsoleControl
 {
