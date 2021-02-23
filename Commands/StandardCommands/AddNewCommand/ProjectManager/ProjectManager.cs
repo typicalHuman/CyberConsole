@@ -16,7 +16,6 @@ namespace Commands
 
         static ProjectManager()
         {
-            modulesFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\modules.json";
             Modules = GetFromJSONData();
             if (Modules == null)
                 Modules = new List<Module>();
@@ -53,7 +52,7 @@ namespace Commands
 
         private static List<Module> Modules { get; set; } = new List<Module>();
 
-        private static string modulesFilePath { get; set; } = string.Empty;
+        private static string MODULES_FILE_PATH = "modules.json";
 
         #endregion
 
@@ -484,7 +483,7 @@ namespace Commands
 
         private static void SaveJSONData()
         {
-                using (StreamWriter sw = File.CreateText(modulesFilePath))
+                using (StreamWriter sw = File.CreateText(MODULES_FILE_PATH))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     serializer.Serialize(sw, Modules);
@@ -493,9 +492,9 @@ namespace Commands
 
         private static List<Module> GetFromJSONData()
         {
-            if (File.Exists(modulesFilePath))
+            if (File.Exists(MODULES_FILE_PATH))
             {
-                using (StreamReader file = File.OpenText(modulesFilePath))
+                using (StreamReader file = File.OpenText(MODULES_FILE_PATH))
                 {
                     JsonSerializer serializer = new JsonSerializer();
                     return (List<Module>)serializer.Deserialize(file, typeof(List<Module>));

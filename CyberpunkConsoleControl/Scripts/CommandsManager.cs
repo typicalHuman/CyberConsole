@@ -13,6 +13,7 @@ using System.Reflection;
 //TODO: add console functions to add commands with -f, -d attributes (file, directory) DONE.
 //TODO: last commands (rAlt | lAlt).
 //TODO: pre-message.
+//TODO: save json after window closing (not every time after changing data).
 
 namespace CyberpunkConsoleControl
 {

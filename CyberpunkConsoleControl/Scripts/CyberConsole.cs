@@ -1,8 +1,11 @@
 ﻿using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -19,6 +22,7 @@ namespace CyberpunkConsoleControl
 
         public CyberConsole()
         {
+            PreviousCommands = GetCommandsHistory() ?? new List<string>();
             TextSegmentCollection<TextSegment> col = new TextSegmentCollection<TextSegment>();
             TextArea.ReadOnlySectionProvider = new TextSegmentReadOnlySectionProvider<TextSegment>(col);
             TextArea.Caret.PositionChanged += OnCaretPositionChanged;
@@ -27,6 +31,7 @@ namespace CyberpunkConsoleControl
             TextArea.SelectionBrush = (Brush)new BrushConverter().ConvertFrom("#4b5e68a1");
             TextArea.SelectionForeground = (Brush)new BrushConverter().ConvertFrom("#579571");
             TextArea.SelectionBorder = new Pen(Brushes.Transparent, 0);
+            
         }
 
         #endregion
@@ -91,7 +96,25 @@ namespace CyberpunkConsoleControl
         /// </summary>
         private bool isConsoleModeChanged { get; set; } = false;
 
+        /// <summary>
+        /// List with previous commands.
+        /// </summary>
+        private List<string> PreviousCommands { get; set; }
+
+        /// <summary>
+        /// Current command(in <see cref="PreviousCommands"/> index.
+        /// </summary>
+        private int previousCommandCounter { get; set; } = 0;
+
         #endregion
+
+        #endregion
+
+        #region Constants
+
+        private const string HISTORY_FILE_PATH = "history.json";
+
+        private const int MAX_HISTORY_SIZE = 50;
 
         #endregion
 
@@ -167,7 +190,7 @@ namespace CyberpunkConsoleControl
             {
                 int caretOffset = target.CaretOffset;
                 object newValue = args.NewValue;
-            
+
 
 
                 if (newValue == null)
@@ -222,7 +245,7 @@ namespace CyberpunkConsoleControl
                 lastCaretLine = Document.LineCount;
             else
                 lastCaretLine = TextArea.Caret.Line;
-          
+
         }
 
         #endregion
@@ -275,6 +298,14 @@ namespace CyberpunkConsoleControl
                     e.Handled = true;
                 TextArea.Caret.Line = lastCaretLine;//setting caret on last line (to remove cases where the caret stays on the previous lines that are readonly)
             }
+            else if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Down))
+            {
+                SetPreviousCommand();
+            }
+            else if (e.KeyboardDevice.IsKeyUp(Key.LeftAlt))
+            {
+                SetNextCommand();
+            }
             base.OnPreviewKeyDown(e);
         }
 
@@ -289,7 +320,7 @@ namespace CyberpunkConsoleControl
             {
                 ScrollToEnd();
                 ProcessCommand();
-            }
+            }         
             base.OnKeyDown(e);
         }
 
@@ -314,16 +345,43 @@ namespace CyberpunkConsoleControl
 
         #region Private
 
+        private void SetPreviousCommand()
+        {
+            if(previousCommandCounter < PreviousCommands.Count - 1)
+               previousCommandCounter++;
+            if (PreviousCommands.Count > 0)
+            {
+                DocumentLine line = Document.GetLineByNumber(lastCaretLine - 1);
+                Document.Remove(line.Offset, line.Length);
+                Document.Insert(line.Offset, PreviousCommands[previousCommandCounter]);
+            }
+        }
+
+        private void SetNextCommand()
+        {
+
+        }
+
+
+        private void UpdateHistory(string commandLineText)
+        {
+            previousCommandCounter = 0;
+            if (PreviousCommands.Count == MAX_HISTORY_SIZE)
+                PreviousCommands[PreviousCommands.Count - 1] = commandLineText;
+            else
+                PreviousCommands.Insert(0, commandLineText);
+        }
+
         /// <summary>
         /// Process command after enter input.
         /// </summary>
         private void ProcessCommand()
         {
             string commandLineText = GetCurrentLineText();
+            UpdateHistory(commandLineText);
             ProcessCommand(commandLineText);
         }
 
- 
 
         /// <summary>
         /// Execute command by <paramref name="commandLineText"/> input.
@@ -365,7 +423,7 @@ namespace CyberpunkConsoleControl
             TextSegmentCollection<TextSegment> segments = (TextArea.ReadOnlySectionProvider as TextSegmentReadOnlySectionProvider<TextSegment>).Segments;
             int lineNum = 0;
             if (segments.Count > 0)
-                  lineNum = Document.GetLineByOffset(segments.Last().StartOffset + 1).LineNumber;
+                lineNum = Document.GetLineByOffset(segments.Last().StartOffset + 1).LineNumber;
             //penultimate line
             if (lineNum < Document.LineCount - 1)
             {
@@ -451,6 +509,32 @@ namespace CyberpunkConsoleControl
             if (isNewLine)
                 Text = Text.Insert(Text.Length, "\n");
         }
+
+        #region JSON Methods
+
+        private List<string> GetCommandsHistory()
+        {
+            if (File.Exists(HISTORY_FILE_PATH))
+            {
+                using (StreamReader file = File.OpenText(HISTORY_FILE_PATH))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    return (List<string>)serializer.Deserialize(file, typeof(List<string>));
+                }
+            }
+            return null;
+        }
+
+        private void SaveCommandsHistory()
+        {
+            using (StreamWriter sw = File.CreateText(HISTORY_FILE_PATH))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(sw, PreviousCommands);
+            }
+        }
+
+        #endregion
 
 
         #endregion

@@ -16,3 +16,5 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl.csproj.CopyComplete
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl.pdb
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Newtonsoft.Json.dll
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Newtonsoft.Json.xml
