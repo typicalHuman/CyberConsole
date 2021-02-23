@@ -1,5 +1,3 @@
-C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csprojAssemblyReference.cache
-C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csproj.CoreCompileInputs.cache
 C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\bin\roslyn\csc.exe
 C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -75,6 +73,8 @@ C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\CyberpunkConso
 C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\ICSharpCode.AvalonEdit.xml
 C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Newtonsoft.Json.xml
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csprojAssemblyReference.cache
+C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csproj.CoreCompileInputs.cache
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csproj.CopyComplete
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.dll
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.pdb

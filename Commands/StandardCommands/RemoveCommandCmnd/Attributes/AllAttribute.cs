@@ -1,5 +1,6 @@
 ﻿using Command.Errors;
 using Command.Interfaces;
+using System.Linq;
 
 namespace Commands.StandardCommands.RemoveCommandCmnd.Attributes
 {
@@ -7,9 +8,7 @@ namespace Commands.StandardCommands.RemoveCommandCmnd.Attributes
     {
         public void Action(object[] args = null)
         {
-            int count = ProjectManager.GetModules().Count;
-            while (count > 0)
-                ProjectManager.RemoveModule(0);
+            ProjectManager.RemoveModules(ProjectManager.GetModules().Select(m => m.Name).ToArray());
             Message = "All modules are removed.";
         }
 

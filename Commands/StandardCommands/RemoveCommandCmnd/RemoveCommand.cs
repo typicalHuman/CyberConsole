@@ -5,6 +5,7 @@ using System.Linq;
 using Command.StandardParameters;
 using Commands.StandardCommands.RemoveCommandCmnd.Attributes;
 using System;
+using Command.Errors;
 
 namespace Commands.StandardCommands
 {
@@ -29,25 +30,41 @@ namespace Commands.StandardCommands
             CurrentAttributes = ExtractAttributes(attribs).ToArray();
             SetParameters<NumberParameter, short>(commandLineText);
             SetParameters<QuoteStringParameter, string>(commandLineText);
-            if (IsCorrectSyntax(true))
+            if (IsCorrectSyntax())
             {
                 if (IsCorrectParameters())
                 {
                     if (attribs.Length > 0)
                     {
-                        attribs[0].Action(Parameters.Select(p => p.Value).ToArray());
+                        attribs[0].Action();
                         Message = attribs[0].Message;
                     }
+                    else if (Parameters.Length == 0 && CurrentAttributes.Length == 0)
+                        Message = new ParametersAbscenceError(StandardParameters).Message;
                     else
-                    {
-                        Message = ProjectManager.RemoveModule(0);
-                    }
+                        Message = RemoveModules();
                 }
                 else
                     Message = "Parameters must contain only 1 type of module search (search by indexes or search by names);";
             }
             else
                 Message = GetErrorMessage(commandLineText);
+        }
+
+        private string RemoveModules()
+        {
+            int r;
+            //removing multiple modules; result string;
+            bool isNumbers = int.TryParse(Parameters.First().Value, out r);
+            Parameters = Parameters.Where(p => p.GetType() != typeof(QuoteStringParameter)).ToArray();//to exclude name parameter;
+            if (isNumbers)
+                return ProjectManager.RemoveModules(Parameters
+                                            .Select(p => int.Parse(p.Value))
+                                            .ToArray());
+
+            return ProjectManager.RemoveModules(Parameters
+                                        .Select(p => p.Value)
+                                        .ToArray());
         }
 
         private bool IsCorrectParameters()

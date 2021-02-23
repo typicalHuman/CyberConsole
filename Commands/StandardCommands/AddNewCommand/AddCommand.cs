@@ -42,7 +42,9 @@ namespace Commands.StandardCommands
                     }
                     else if (CurrentAttributes.Length == 0)
                         CurrentAttributes = new IAttrib[] { new FileAttribute() };
-                    CurrentAttributes[0].Action(Parameters.Select(p => p.Value).ToArray());
+                    (CurrentAttributes[0] as FileAddAttribute).Action(
+                        Parameters.OfType<StringParameter>().Select(p => p.Value).ToArray(), //Get files.
+                        Parameters.FirstOrDefault(p => p.GetType() == typeof(QuoteStringParameter))?.Value);//Get name.
                     Message = CurrentAttributes[0].Message;
                 }
                 else

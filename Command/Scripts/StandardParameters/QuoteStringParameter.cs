@@ -5,7 +5,7 @@ namespace Command.StandardParameters
 {
     public class QuoteStringParameter : Parameter<string>
     {
-        protected override IParameterParser<string> Parser { get; set; } = new StringParser();
+        protected override IParameterParser<string> Parser { get; set; } = new QuoteStringParser();
 
 
         public static explicit operator QuoteStringParameter(string text)

@@ -17,7 +17,7 @@ namespace Commands
         static ProjectManager()
         {
             modulesFilePath = AppDomain.CurrentDomain.BaseDirectory + @"\modules.json";
-            InitFromJSONData();
+            Modules = GetFromJSONData();
             if (Modules == null)
                 Modules = new List<Module>();
         }
@@ -64,27 +64,28 @@ namespace Commands
         #region Public
 
         /// <summary>
-        /// Remove module by index.
+        /// Remove multiple modules.
         /// </summary>
-        /// <param name="index">Index of element to remove.</param>
-        public static string RemoveModule(int index)
+        /// <param name="indexes">Array with indexes.</param>
+        public static string RemoveModules(params int[] indexes)
         {
-            Action<int> func = (ind) => {
-                Modules.RemoveAt(ind);
+            Action<int[]> func = (_indexes) => {
+                for(int i = 0; i < indexes.Length; i++)
+                    Modules.RemoveAt(_indexes[i]);
             };
-            return RemoveModule(func, index);
+            return RemoveModule(func, indexes);
         }
-
         /// <summary>
-        /// Remove module by name.
+        /// Remove multiple modules.
         /// </summary>
-        /// <param name="name">Module name.</param>
-        public static string RemoveModule(string name)
+        /// <param name="names">Array with names.</param>
+        public static string RemoveModules(params string[] names)
         {
-            Action<string> func = (_name) => {
-                Modules.Remove(Modules.Find(m => m.Name == _name));
+            Action<string[]> func = (_names) => {
+                for (int i = 0; i < _names.Length; i++)
+                    Modules.Remove(Modules.Find(m => m.Name == _names[i]));
             };
-            return RemoveModule(func, name);
+            return RemoveModule(func, names);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Commands
         /// </summary>
         /// <param name="files">C# files paths.</param>
         /// <returns>Build result.</returns>
-        public static string AddFiles(params string[] files)
+        public static string AddFiles(string moduleName = null, params string[] files)
         {
             //files = new[] { @"C:\Users\HP\Desktop\editorcommand.cs" };
             if (files != null && files.Length > 0)
@@ -117,7 +118,10 @@ namespace Commands
                         string buildResult = Build(referencedAssemblies.ToArray(), _dlls, files);
                         if (buildResult.Contains(SUCCESS_BUILD_RESULT))
                         {
-                            Modules.Add(new Module(files, _dlls, $"Module #{Modules.Count + 1}"));
+                            string _moduleName = moduleName;
+                            if (moduleName == null)
+                                _moduleName = $"Module #{Modules.Count + 1}";
+                            Modules.Add(new Module(files, _dlls, moduleName));
                             SaveJSONData();
                         }
                         return buildResult;
@@ -134,7 +138,7 @@ namespace Commands
         /// </summary>
         /// <param name="directories">Paths to directories</param>
         /// <returns>Build result.</returns>
-        public static string AddDirectories(params string[] directories)
+        public static string AddDirectories(string moduleName = null, params string[] directories)
         {
             if (directories != null && directories.Length > 0)
             {
@@ -146,7 +150,7 @@ namespace Commands
                         files.AddRange(GetDirectoryFiles(directories[i]));
                     if (files.Count == 0)
                         return NO_FILES_ERROR;
-                    return AddFiles(files.ToArray());
+                    return AddFiles(moduleName, files.ToArray());
                 }
                 return checkDirsResult;
             }
@@ -452,13 +456,25 @@ namespace Commands
         /// </summary>
         private static string[] ConcatFiles(string[] newFiles)
         {
-            List<string> files = newFiles.ToList();
-            foreach (Module m in Modules)
+            if (!IsModulesRemoved())
             {
-                foreach (string path in m.FilesPaths)
-                    files.Add(path);
+                List<string> files = newFiles.ToList();
+                foreach (Module m in Modules)
+                {
+                    foreach (string path in m.FilesPaths)
+                        files.Add(path);
+                }
+                return files.ToArray();
             }
-            return files.ToArray();
+            return newFiles;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private static bool IsModulesRemoved()
+        {
+            return Modules.Count == GetFromJSONData()?.Count;
         }
 
 
@@ -475,16 +491,17 @@ namespace Commands
                 }
         }
 
-        private static void InitFromJSONData()
+        private static List<Module> GetFromJSONData()
         {
             if (File.Exists(modulesFilePath))
             {
                 using (StreamReader file = File.OpenText(modulesFilePath))
                 {
                     JsonSerializer serializer = new JsonSerializer();
-                    Modules = (List<Module>)serializer.Deserialize(file, typeof(List<Module>));
+                    return (List<Module>)serializer.Deserialize(file, typeof(List<Module>));
                 }
             }
+            return null;
         }
 
         #endregion

@@ -1,30 +1,19 @@
 ﻿using Command.Errors;
-using Command.Interfaces;
 
 namespace Commands.StandardCommands.AddNewCommand.Attributes
 {
-    internal class FileAttribute: IAttrib
+    internal class FileAttribute: FileAddAttribute
     {
-        public void Action(object[] args = null)
+        public override void Action(object[] args = null, string moduleName = null)
         {
             if (args == null || args.Length == 0)
                 Error = new NullValueError();
             else
-                Message = ProjectManager.AddFiles(args as string[]);
+                Message = ProjectManager.AddFiles(moduleName, args as string[]);
         }
 
-        public string Value => "-f";
-        public bool Equals(string parameter)
-        {
-            return Value.Equals(parameter);
-        }
+        public override string Description { get; protected set; } = "attribute for saving one or more files;";
 
-        public string Message { get; private set; }
-
-        public Error Error { get; set; }
-        public int Offset { get; set; }
-        public int EndOffset { get; set; }
-
-        public virtual string Description { get; protected set; } = "attribute for saving one or more files;";
+        public override string Value { get; protected set; } = "-f";
     }
 }

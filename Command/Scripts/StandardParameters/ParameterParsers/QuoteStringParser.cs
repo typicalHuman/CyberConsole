@@ -7,14 +7,14 @@ namespace Command.StandardParameters.ParameterParsers
     /// <summary>
     /// Class for parsing strings.
     /// </summary>
-    public class StringParser : ParameterParser<string>
+    public class QuoteStringParser : ParameterParser<string>
     {
         #region Constants
 
         /// <summary>
         /// Pattern for defining strings in quotes.
         /// </summary>
-        private const string REGEX_PATTERN = ".*?(\\\".*\\\").*?";
+        private const string REGEX_PATTERN = ".*?('.*').*?";
 
         #endregion
 
@@ -23,7 +23,7 @@ namespace Command.StandardParameters.ParameterParsers
             string[] matches = GetMatches(input, REGEX_PATTERN);
             if (matches.Length == 0)
             {
-                if (input.Contains('"'))//check is input contains quote
+                if (input.Contains("'"))//check is input contains quote
                     error = new UnclosedQuoteError();
                 else
                     error = new AnotherParameterError();

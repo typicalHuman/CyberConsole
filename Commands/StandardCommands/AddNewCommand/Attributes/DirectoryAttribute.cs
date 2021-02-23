@@ -1,30 +1,19 @@
 ﻿using Command.Errors;
-using Command.Interfaces;
 
 namespace Commands.StandardCommands.AddNewCommand.Attributes
 {
-    internal class DirectoryAttribute: IAttrib
+    internal class DirectoryAttribute: FileAddAttribute
     {
-        public void Action(object[] args = null)
+        public override void Action(object[] args = null, string moduleName = null)
         {
             if (args == null || args.Length == 0)
                 Error = new NullValueError();
             else
-                Message = ProjectManager.AddDirectories(args as string[]);
+                Message = ProjectManager.AddDirectories(moduleName, args as string[]);
         }
 
-        public string Value => "-d";
-        public bool Equals(string parameter)
-        {
-            return Value.Equals(parameter);
-        }
+        public override string Value { get; protected set; } = "-d";
 
-        public string Message { get; set; }
-
-        public Error Error { get; set; }
-        public int Offset { get; set; }
-        public int EndOffset { get; set; }
-
-        public virtual string Description { get; protected set; } = "'attribute for adding all files in the directories (and in the subdirectories);";
+        public override string Description { get; protected set; } = "'attribute for adding all files in the directories (and in the subdirectories);";
     }
 }
