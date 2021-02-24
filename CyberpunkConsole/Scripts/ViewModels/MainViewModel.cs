@@ -89,7 +89,6 @@ namespace CyberpunkConsole.Scripts.ViewModels
         {
             get => closeCommand ?? (closeCommand = new RelayCommand(obj =>
             {
-
                 CloseAction();
             }));
 

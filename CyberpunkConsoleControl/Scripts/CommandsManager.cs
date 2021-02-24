@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 //TODO: create for(init;condition;iteration) "[command]" command. DONE
 //TODO: create method in CyberCommand to set none parameters error. DONE
@@ -11,9 +13,9 @@ using System.Reflection;
 //TODO: clear command. DONE.
 //TODO: fix copy of readonly segments. DONE.
 //TODO: add console functions to add commands with -f, -d attributes (file, directory) DONE.
-//TODO: last commands (rAlt | lAlt).
+//TODO: last commands (rAlt | lAlt). DONE.
 //TODO: pre-message.
-//TODO: save json after window closing (not every time after changing data).
+//TODO: clr_hist - clear history.
 
 namespace CyberpunkConsoleControl
 {
@@ -81,7 +83,6 @@ namespace CyberpunkConsoleControl
                 }
             }
             console.InsertText(NOT_FOUND, true);
-          
         }
 
         /// <summary>

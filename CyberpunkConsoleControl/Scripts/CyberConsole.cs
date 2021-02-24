@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
+using Microsoft.IO;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -302,7 +303,7 @@ namespace CyberpunkConsoleControl
             {
                 SetPreviousCommand();
             }
-            else if (e.KeyboardDevice.IsKeyUp(Key.LeftAlt))
+            else if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Up))
             {
                 SetNextCommand();
             }
@@ -347,19 +348,26 @@ namespace CyberpunkConsoleControl
 
         private void SetPreviousCommand()
         {
-            if(previousCommandCounter < PreviousCommands.Count - 1)
-               previousCommandCounter++;
-            if (PreviousCommands.Count > 0)
-            {
-                DocumentLine line = Document.GetLineByNumber(lastCaretLine - 1);
-                Document.Remove(line.Offset, line.Length);
-                Document.Insert(line.Offset, PreviousCommands[previousCommandCounter]);
-            }
+            SetCommandFromHistory();
+            if (previousCommandCounter < PreviousCommands.Count - 1)
+                previousCommandCounter++;
         }
 
         private void SetNextCommand()
         {
+            SetCommandFromHistory();
+            if (previousCommandCounter > 0)
+                previousCommandCounter--;
+        }
 
+        private void SetCommandFromHistory()
+        {
+            if (PreviousCommands.Count > 0)
+            {
+                DocumentLine line = Document.GetLineByNumber(lastCaretLine);
+                Document.Remove(line.Offset, line.Length);
+                Document.Insert(line.Offset, PreviousCommands[previousCommandCounter]);
+            }
         }
 
 
@@ -370,6 +378,7 @@ namespace CyberpunkConsoleControl
                 PreviousCommands[PreviousCommands.Count - 1] = commandLineText;
             else
                 PreviousCommands.Insert(0, commandLineText);
+            SaveCommandsHistory();
         }
 
         /// <summary>
@@ -419,22 +428,22 @@ namespace CyberpunkConsoleControl
         /// </summary>
         private void CreatePreviousLineReadonlySegment()
         {
-            TextSegment seg = new TextSegment();
-            TextSegmentCollection<TextSegment> segments = (TextArea.ReadOnlySectionProvider as TextSegmentReadOnlySectionProvider<TextSegment>).Segments;
-            int lineNum = 0;
-            if (segments.Count > 0)
-                lineNum = Document.GetLineByOffset(segments.Last().StartOffset + 1).LineNumber;
-            //penultimate line
-            if (lineNum < Document.LineCount - 1)
-            {
-                var line = Document.Lines[lineNum];
-                seg.StartOffset = line.Offset;
-                if (seg.StartOffset > 0)
-                    seg.StartOffset--;
-                seg.EndOffset = line.EndOffset + 1;//to remove cases when with removing line first letters goes to previous line (which is readonly)
-                if (!segments.Contains(seg))
-                    segments.Add(seg);
-            }
+                TextSegment seg = new TextSegment();
+                TextSegmentCollection<TextSegment> segments = (TextArea.ReadOnlySectionProvider as TextSegmentReadOnlySectionProvider<TextSegment>).Segments;
+                int lineNum = 0;
+                if (segments.Count > 0)
+                    lineNum = Document.GetLineByOffset(segments.Last().StartOffset + 1).LineNumber;
+                //penultimate line
+                if (lineNum < Document.LineCount - 1)
+                {
+                    var line = Document.Lines[lineNum];
+                    seg.StartOffset = line.Offset;
+                    if (seg.StartOffset > 0)
+                        seg.StartOffset--;
+                    seg.EndOffset = line.EndOffset + 1;//to remove cases when with removing line first letters goes to previous line (which is readonly)
+                    if (!segments.Contains(seg))
+                        segments.Add(seg);
+                }
         }
 
 
@@ -525,14 +534,27 @@ namespace CyberpunkConsoleControl
             return null;
         }
 
-        private void SaveCommandsHistory()
+        private async void SaveCommandsHistory()
         {
-            using (StreamWriter sw = File.CreateText(HISTORY_FILE_PATH))
+            var streamManager = new RecyclableMemoryStreamManager();
+
+            using (var file = File.Open(HISTORY_FILE_PATH, FileMode.Create))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(sw, PreviousCommands);
+                using (var memoryStream = streamManager.GetStream())
+                {
+                    using (var writer = new StreamWriter(memoryStream))
+                    {
+                        var serializer = JsonSerializer.CreateDefault();
+                        serializer.Serialize(writer, PreviousCommands);
+                        await writer.FlushAsync().ConfigureAwait(false);
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        await memoryStream.CopyToAsync(file).ConfigureAwait(false);
+                    }
+                }
+                await file.FlushAsync().ConfigureAwait(false);
             }
         }
+
 
         #endregion
 

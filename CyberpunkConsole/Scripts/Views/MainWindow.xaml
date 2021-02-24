@@ -101,7 +101,8 @@
             <Button Background="#8d2f3c">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding CloseCommand}"/>
+                        <i:InvokeCommandAction Command="{Binding CloseCommand}"
+                                               />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>

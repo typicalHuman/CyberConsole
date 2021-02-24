@@ -18,3 +18,5 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl.pdb
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Newtonsoft.Json.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Newtonsoft.Json.xml
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml

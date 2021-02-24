@@ -78,3 +78,5 @@ C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.cspro
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.csproj.CopyComplete
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.dll
 C:\files\Programming\Programs\CyberpunkConsole\Commands\obj\Debug\Commands.pdb
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\files\Programming\Programs\CyberpunkConsole\Commands\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml

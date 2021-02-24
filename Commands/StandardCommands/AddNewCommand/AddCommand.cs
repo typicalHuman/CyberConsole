@@ -2,10 +2,14 @@
 using Command.Interfaces;
 using Command.StandardParameters;
 using System.Linq;
+using System.ComponentModel;
 using Commands.StandardCommands.AddNewCommand.Attributes;
 using Command.Parsers;
 using Command.Errors;
+using System.Threading.Tasks;
 using CyberpunkConsoleControl;
+using ICSharpCode.AvalonEdit.Editing;
+using System;
 
 namespace Commands.StandardCommands
 {
@@ -26,35 +30,47 @@ namespace Commands.StandardCommands
 
         public override string Description { get; protected set; } = "command for dynamically adding new commands from files;";
 
-        public override void Action(string commandLineText, params object[] args)
+
+        public override async void Action(string commandLineText, params object[] args)
         {
-            IAttrib[] attribs = (Parser as StandardParser).GetAttributes(this, commandLineText);
-            CurrentAttributes = ExtractAttributes(attribs).ToArray();
-            SetParameters<StringParameter, string>(commandLineText);
-            SetParameters<QuoteStringParameter, string>(commandLineText);
-            if (IsCorrectSyntax(true))
+            CyberConsole cc = (args[0] as CyberConsole);
+            cc.InsertText("building");
+            cc.IsEnabled = false;
+            await Task.Run(() =>
             {
-                if (IsCorrectParameters())
+                IAttrib[] attribs = (Parser as StandardParser).GetAttributes(this, commandLineText);
+                CurrentAttributes = ExtractAttributes(attribs).ToArray();
+                SetParameters<StringParameter, string>(commandLineText);
+                SetParameters<QuoteStringParameter, string>(commandLineText);
+                if (IsCorrectSyntax(true))
                 {
-                    if (CurrentAttributes.Length > 1)
+                    if (IsCorrectParameters())
                     {
-                        Message = new ParametersExcessError("File attribute must have a single path to .cs file.").Message;
-                        return;
+                        if (CurrentAttributes.Length > 1)
+                        {
+                            Message = new ParametersExcessError("File attribute must have a single path to .cs file.").Message;
+                            return;
+                        }
+                        else if (CurrentAttributes.Length == 0)
+                            CurrentAttributes = new IAttrib[] { new FileAttribute() };
+                        (CurrentAttributes[0] as FileAddAttribute).Action(
+                            Parameters.OfType<StringParameter>().Select(p => p.Value).ToArray(), //Get files.
+                            Parameters.FirstOrDefault(p => p.GetType() == typeof(QuoteStringParameter))?.Value);//Get name.
+                        Message = CurrentAttributes[0].Message;
                     }
-                    else if (CurrentAttributes.Length == 0)
-                        CurrentAttributes = new IAttrib[] { new FileAttribute() };
-                    (CurrentAttributes[0] as FileAddAttribute).Action(
-                        Parameters.OfType<StringParameter>().Select(p => p.Value).ToArray(), //Get files.
-                        Parameters.FirstOrDefault(p => p.GetType() == typeof(QuoteStringParameter))?.Value);//Get name.
-                    Message = CurrentAttributes[0].Message;
+                    else
+                        Message = "Module should contain only one name.";
                 }
                 else
-                    Message = "Module should contain only one name.";
-            }
-            else
-                Message = GetErrorMessage(commandLineText);
+                    Message = GetErrorMessage(commandLineText);
+                cc.Dispatcher.Invoke(() =>
+                {
+                    cc.InsertText(Message);
+                    cc.IsEnabled = true;
+                    cc.Focus();
+                });
+            });
         }
-
         private bool IsCorrectParameters()
         {
             if (Parameters.Where(p => p.GetType() == typeof(QuoteStringParameter)).Count() > 1)
