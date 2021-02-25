@@ -14,8 +14,9 @@ using System.Threading.Tasks;
 //TODO: fix copy of readonly segments. DONE.
 //TODO: add console functions to add commands with -f, -d attributes (file, directory) DONE.
 //TODO: last commands (rAlt | lAlt). DONE.
-//TODO: pre-message.
-//TODO: clr_hist - clear history.
+//TODO: pre-message. DONE.
+//TODO: clr_hist - clear history. DONE.
+//TODO: action method for async operations.
 
 namespace CyberpunkConsoleControl
 {

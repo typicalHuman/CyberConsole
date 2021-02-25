@@ -221,7 +221,7 @@ namespace Command
         /// <returns>Array with errors or array with the single <see cref="SyntaxError"/> error.</returns>
         private Error[] GetErrors(string commandLineText)
         {
-            if (Parameters.Length > 0 && Parameters[0] != null)
+            if (Parameters != null && Parameters.Length > 0 && Parameters[0] != null)
             {
                 int errorsCount = Parameters.Count(p => p.Error != null && p.Error.ErrorType != 0);
                 Error[] errors = new Error[errorsCount];

@@ -100,7 +100,7 @@ namespace CyberpunkConsoleControl
         /// <summary>
         /// List with previous commands.
         /// </summary>
-        private List<string> PreviousCommands { get; set; }
+        public List<string> PreviousCommands { get; set; }
 
         /// <summary>
         /// Current command(in <see cref="PreviousCommands"/> index.

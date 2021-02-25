@@ -57,14 +57,7 @@ namespace Commands.StandardCommands
                 }
                 else
                     Message = GetErrorMessage(commandLineText);
-                cc.Dispatcher.Invoke(() =>
-                {
-                    cc.InsertText(Message, true);
-                    int end = cc.Document.LineCount - 1;
-                    (cc.TextArea.LeftMargins[0] as NewLineMargin).RemoveLines(start, end);
-                    cc.IsEnabled = true;
-                    cc.Focus();
-                });
+                cc.InsertTextAsync(Message, start);
             });
          
         }
