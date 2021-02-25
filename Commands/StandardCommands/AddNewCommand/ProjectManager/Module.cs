@@ -9,7 +9,7 @@ namespace Commands
         [JsonProperty]
         public string[] DllsPaths { get; private set; }
         [JsonProperty]
-        public string Name { get; private set; }
+        public string Name { get; internal set; }
 
         public Module(string[] files, string[] dlls, string name)
         {

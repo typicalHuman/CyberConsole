@@ -6,6 +6,8 @@ using Command.StandardParameters;
 using Commands.StandardCommands.RemoveCommandCmnd.Attributes;
 using System;
 using Command.Errors;
+using System.Threading.Tasks;
+using CyberpunkConsoleControl;
 
 namespace Commands.StandardCommands
 {
@@ -24,31 +26,47 @@ namespace Commands.StandardCommands
         public override string Spelling { get; protected set; } = "rm_cmnd";
         public override string Description { get; protected set; } = "remove command by index;";
 
-        public override void Action(string commandLineText, params object[] args)
+        public override async void Action(string commandLineText, params object[] args)
         {
-            IAttrib[] attribs = (Parser as StandardParser).GetAttributes(this, commandLineText);
-            CurrentAttributes = ExtractAttributes(attribs).ToArray();
-            SetParameters<NumberParameter, short>(commandLineText);
-            SetParameters<QuoteStringParameter, string>(commandLineText);
-            if (IsCorrectSyntax())
+            CyberConsole cc = (args[0] as CyberConsole);
+            int start = cc.Document.LineCount;
+            cc.InsertText("Deleting . . .");
+            cc.IsEnabled = false;
+            await Task.Run(() =>
             {
-                if (IsCorrectParameters())
+                IAttrib[] attribs = (Parser as StandardParser).GetAttributes(this, commandLineText);
+                CurrentAttributes = ExtractAttributes(attribs).ToArray();
+                SetParameters<NumberParameter, short>(commandLineText);
+                SetParameters<QuoteStringParameter, string>(commandLineText);
+                if (IsCorrectSyntax())
                 {
-                    if (attribs.Length > 0)
+                    if (IsCorrectParameters())
                     {
-                        attribs[0].Action();
-                        Message = attribs[0].Message;
+                        if (attribs.Length > 0)
+                        {
+                            attribs[0].Action();
+                            Message = attribs[0].Message;
+                        }
+                        else if (Parameters.Length == 0 && CurrentAttributes.Length == 0)
+                            Message = new ParametersAbscenceError(StandardParameters).Message;
+                        else
+                            Message = RemoveModules();
                     }
-                    else if (Parameters.Length == 0 && CurrentAttributes.Length == 0)
-                        Message = new ParametersAbscenceError(StandardParameters).Message;
                     else
-                        Message = RemoveModules();
+                        Message = "Parameters must contain only 1 type of module search (search by indexes or search by names);";
                 }
                 else
-                    Message = "Parameters must contain only 1 type of module search (search by indexes or search by names);";
-            }
-            else
-                Message = GetErrorMessage(commandLineText);
+                    Message = GetErrorMessage(commandLineText);
+                cc.Dispatcher.Invoke(() =>
+                {
+                    cc.InsertText(Message, true);
+                    int end = cc.Document.LineCount - 1;
+                    (cc.TextArea.LeftMargins[0] as NewLineMargin).RemoveLines(start, end);
+                    cc.IsEnabled = true;
+                    cc.Focus();
+                });
+            });
+         
         }
 
         private string RemoveModules()
@@ -56,7 +74,6 @@ namespace Commands.StandardCommands
             int r;
             //removing multiple modules; result string;
             bool isNumbers = int.TryParse(Parameters.First().Value, out r);
-            Parameters = Parameters.Where(p => p.GetType() != typeof(QuoteStringParameter)).ToArray();//to exclude name parameter;
             if (isNumbers)
                 return ProjectManager.RemoveModules(Parameters
                                             .Select(p => int.Parse(p.Value))

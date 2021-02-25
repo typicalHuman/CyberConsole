@@ -160,16 +160,38 @@ namespace Commands
 
         #region Private
 
-        #region RemoveModule Methods
+        #region Modules Methods
 
+        /// <summary>
+        /// Generic method for module removing by names and indexes.
+        /// </summary>
+        /// <typeparam name="T">Parameter type.</typeparam>
+        /// <param name="removeMethod">Remove module action.</param>
+        /// <param name="parameter">Parameter for <paramref name="removeMethod"/>.</param>
         private static string RemoveModule<T>(Action<T> removeMethod, T parameter)
         {
             if (Modules.Count == 0)
                 return "No modules to remove.";
+            int beforeRemovingCount = Modules.Count;
             removeMethod(parameter);
+            int afterRemovingCount = Modules.Count;
+            if (beforeRemovingCount == afterRemovingCount)
+                return "Could not find modules by yours parameters.";
             string result = BuildModules();
             SaveJSONData();
             return result;
+        }
+
+        /// <summary>
+        /// Method for updating modules names counter.
+        /// </summary>
+        private static void UpdateModulesNames()
+        {
+            for(int i = 0; i < Modules.Count; i++)
+            {
+                if (Modules[i].Name.Contains("Module #"))
+                    Modules[i].Name = $"Module #{i + 1}";
+            }
         }
 
         #endregion
@@ -384,6 +406,7 @@ namespace Commands
                 errorString.Insert(errorString.Length, $"\n{FAILED_BUILD_RESULT}");
                 return errorString;
             }
+            UpdateModulesNames();
             string result = string.Join(" ", cr.Output.Cast<string>().ToArray());
             return result.Insert(result.Length, $"\n{SUCCESS_BUILD_RESULT}");
         }
