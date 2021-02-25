@@ -48,6 +48,7 @@
                         <Setter Property="BorderBrush" Value="#1e1e1e"/>
                         <Setter Property="Width" Value="120"/>
                         <Setter Property="BorderThickness" Value="1.4"/>
+                        <Setter Property="IsEnabled" Value="{Binding ElementName=textEditor, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
                     </Style>
                 </StackPanel.Resources>
                 <Button Content="Commands">
@@ -57,7 +58,13 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
-                <Button Content="Shortcuts"/>
+                <Button Content="Shortcuts">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding PrintShortcutsInfoCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
                 <Button Content="Modules">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">

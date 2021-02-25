@@ -2,8 +2,12 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\CyberpunkConsoleControl.pdb
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Command.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\ICSharpCode.AvalonEdit.dll
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Newtonsoft.Json.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Command.pdb
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\ICSharpCode.AvalonEdit.xml
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml
+C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Newtonsoft.Json.xml
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl.csprojAssemblyReference.cache
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl_MarkupCompile.cache
@@ -16,7 +20,3 @@ C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl.csproj.CopyComplete
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl.dll
 C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\obj\Debug\CyberpunkConsoleControl.pdb
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Newtonsoft.Json.dll
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Newtonsoft.Json.xml
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Microsoft.IO.RecyclableMemoryStream.dll
-C:\files\Programming\Programs\CyberpunkConsole\CyberpunkConsoleControl\bin\Debug\Microsoft.IO.RecyclableMemoryStream.xml

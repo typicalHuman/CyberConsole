@@ -3,4 +3,3 @@ C:\files\Programming\Programs\CyberpunkConsole\Command\bin\Debug\Command.pdb
 C:\files\Programming\Programs\CyberpunkConsole\Command\obj\Debug\Command.csproj.CoreCompileInputs.cache
 C:\files\Programming\Programs\CyberpunkConsole\Command\obj\Debug\Command.dll
 C:\files\Programming\Programs\CyberpunkConsole\Command\obj\Debug\Command.pdb
-C:\files\Programming\Programs\CyberpunkConsole\Command\obj\Debug\Command.csprojAssemblyReference.cache

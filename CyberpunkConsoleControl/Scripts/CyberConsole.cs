@@ -299,13 +299,16 @@ namespace CyberpunkConsoleControl
                     e.Handled = true;
                 TextArea.Caret.Line = lastCaretLine;//setting caret on last line (to remove cases where the caret stays on the previous lines that are readonly)
             }
-            else if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Down))
-            {
-                SetPreviousCommand();
-            }
-            else if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Up))
-            {
-                SetNextCommand();
+            if (ConsoleMode == ConsoleMode.COMMAND_MODE)
+            { 
+                if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Down))
+                {
+                    SetPreviousCommand();
+                }
+                else if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Up))
+                {
+                    SetNextCommand();
+                }
             }
             base.OnPreviewKeyDown(e);
         }
@@ -552,6 +555,8 @@ namespace CyberpunkConsoleControl
                         await writer.FlushAsync().ConfigureAwait(false);
                         memoryStream.Seek(0, SeekOrigin.Begin);
                         await memoryStream.CopyToAsync(file).ConfigureAwait(false);
+                        memoryStream.Close();
+                        writer.Close();
                     }
                 }
                 await file.FlushAsync().ConfigureAwait(false);

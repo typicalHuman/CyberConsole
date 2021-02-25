@@ -125,6 +125,7 @@ namespace CyberpunkConsole.Scripts.ViewModels
                 int? counter = ProjectManager.GetModules()?.Count;
                 if (counter != null)
                 {
+                    InsertText("");
                     foreach (Module m in ProjectManager.GetModules())
                     {
                         counter--;
@@ -135,6 +136,20 @@ namespace CyberpunkConsole.Scripts.ViewModels
                             InsertText("");
                     }
                 }
+            }));
+        }
+        #endregion
+
+        #region PrintShortcutsInfo
+
+        private RelayCommand printShortcutsInfoCommand;
+        public RelayCommand PrintShortcutsInfoCommand
+        {
+            get => printShortcutsInfoCommand ?? (printShortcutsInfoCommand = new RelayCommand(obj =>
+            {
+                InsertText("\nCTRL+R - select line;");
+                InsertText("CTRL+UP_ARROW - next command from history;");
+                InsertText("CTRL+DOWN_ARROW - previous command from history;");
             }));
         }
         #endregion

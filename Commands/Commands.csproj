@@ -70,6 +70,7 @@
     <Compile Include="StandardCommands\AsyncExtension.cs" />
     <Compile Include="StandardCommands\ClearCommand.cs" />
     <Compile Include="StandardCommands\ClearHistoryCommand.cs" />
+    <Compile Include="StandardCommands\EditorCommand.cs" />
     <Compile Include="StandardCommands\LoopCommand.cs" />
     <Compile Include="StandardCommands\PrintCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
