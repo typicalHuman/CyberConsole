@@ -105,7 +105,7 @@ namespace CyberpunkConsoleControl
         /// <summary>
         /// Current command(in <see cref="PreviousCommands"/> index.
         /// </summary>
-        private int previousCommandCounter { get; set; } = 0;
+        private int previousCommandCounter { get; set; } = -1;
 
         #endregion
 
@@ -348,16 +348,20 @@ namespace CyberpunkConsoleControl
 
         private void SetPreviousCommand()
         {
-            SetCommandFromHistory();
             if (previousCommandCounter < PreviousCommands.Count - 1)
+            {
                 previousCommandCounter++;
+                SetCommandFromHistory();
+            }
         }
 
         private void SetNextCommand()
         {
-            SetCommandFromHistory();
             if (previousCommandCounter > 0)
+            {
                 previousCommandCounter--;
+                SetCommandFromHistory();
+            }
         }
 
         private void SetCommandFromHistory()
@@ -366,18 +370,17 @@ namespace CyberpunkConsoleControl
             {
                 DocumentLine line = Document.GetLineByNumber(lastCaretLine);
                 Document.Remove(line.Offset, line.Length);
-                Document.Insert(line.Offset, PreviousCommands[previousCommandCounter]);
+                Document.Insert(Document.GetLineByNumber(lastCaretLine).Offset, PreviousCommands[previousCommandCounter]);
             }
         }
 
 
         private void UpdateHistory(string commandLineText)
         {
-            previousCommandCounter = 0;
+            previousCommandCounter = -1;
             if (PreviousCommands.Count == MAX_HISTORY_SIZE)
-                PreviousCommands[PreviousCommands.Count - 1] = commandLineText;
-            else
-                PreviousCommands.Insert(0, commandLineText);
+                PreviousCommands.RemoveAt(MAX_HISTORY_SIZE - 1);
+            PreviousCommands.Insert(0, commandLineText);
             SaveCommandsHistory();
         }
 

@@ -34,7 +34,8 @@ namespace Commands.StandardCommands
         public override async void Action(string commandLineText, params object[] args)
         {
             CyberConsole cc = (args[0] as CyberConsole);
-            cc.InsertText("building");
+            int start = cc.Document.LineCount;
+            cc.InsertText("Building . . .");
             cc.IsEnabled = false;
             await Task.Run(() =>
             {
@@ -65,7 +66,9 @@ namespace Commands.StandardCommands
                     Message = GetErrorMessage(commandLineText);
                 cc.Dispatcher.Invoke(() =>
                 {
-                    cc.InsertText(Message);
+                    cc.InsertText(Message, true);
+                    int end = cc.Document.LineCount - 1;
+                    (cc.TextArea.LeftMargins[0] as NewLineMargin).RemoveLines(start, end);
                     cc.IsEnabled = true;
                     cc.Focus();
                 });
