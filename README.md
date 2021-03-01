@@ -8,7 +8,7 @@
 ![](https://img.shields.io/badge/.NET-v.4.6.1-green.svg?style=flat-square&logo=nuget&logoColor=blue&link=https://www.nuget.org/packages/CyberpunkConsole)
 
 ## Info
-CyberpunkConsole is based on [AvalonEdit](http://avalonedit.net/). It has several standard commands for primitive work, but the primary feature of console is - **dynamically changing commands composition**. You can add and delete your own commands with **add_cmnd** and **rm_cmnd** commands. Commands build includes all *WPF* references + references to CyberpunkConsole libraries. You also can add yours dlls to project and it will be concluded in the **Module**.
+The CyberpunkConsole is based on [AvalonEdit](http://avalonedit.net/). It has several standard commands for primitive operations, but the primary feature of the console is - **dynamically changing commands composition**. You can add and delete your own commands with the **add_cmnd** and **rm_cmnd** commands. The commands build includes all *WPF* references + references to CyberpunkConsole libraries. You also can add your dlls to the project and it will be concluded in the **Module**.
 
 ### Template
 ```csharp
