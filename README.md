@@ -45,4 +45,4 @@ The CyberpunkConsole is based on [AvalonEdit](http://avalonedit.net/). It has se
  
 ## [Documentation](https://github.com/typicalHuman/CyberConsole/wiki)
 
-## [Nuget](https://www.nuget.org/packages/CyberpunkConsole)
+## [NuGet](https://www.nuget.org/packages/CyberpunkConsole)
